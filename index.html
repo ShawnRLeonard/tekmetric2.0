@@ -169,44 +169,52 @@
 
       </section>
 
-      <!-- ===== REPAIR ORDERS ===== -->
+      <!-- ===== REPAIR ORDERS / JOB BOARD ===== -->
       <section id="page-repair-orders" class="page">
 
-        <div class="page-toolbar">
-          <div class="page-toolbar-left">
-            <div class="filter-tabs" id="ro-filter-tabs">
-              <button class="filter-tab active" data-filter="all">All</button>
-              <button class="filter-tab" data-filter="Estimate">Estimate</button>
-              <button class="filter-tab" data-filter="Approved">Approved</button>
-              <button class="filter-tab" data-filter="In Progress">In Progress</button>
-              <button class="filter-tab" data-filter="Completed">Completed</button>
-              <button class="filter-tab" data-filter="Invoiced">Invoiced</button>
+        <div class="board-toolbar">
+          <div class="board-toolbar-left">
+            <div class="view-toggle">
+              <button class="view-btn active" id="viewBoard">
+                <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="18" rx="1"/><rect x="14" y="3" width="7" height="10" rx="1"/><rect x="14" y="17" width="7" height="4" rx="1"/></svg>
+                Board
+              </button>
+              <button class="view-btn" id="viewList">
+                <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+                List
+              </button>
             </div>
-          </div>
-          <div class="page-toolbar-right">
             <div class="search-wrap">
               <input type="text" class="inline-search" id="ro-search" placeholder="Search ROs...">
             </div>
+          </div>
+          <div class="board-toolbar-right">
             <button class="btn btn-primary" id="newRoBtn2">+ New RO</button>
           </div>
         </div>
 
-        <div class="table-wrap">
-          <table class="data-table" id="ro-table">
-            <thead>
-              <tr>
-                <th>RO #</th>
-                <th>Customer</th>
-                <th>Vehicle</th>
-                <th>Status</th>
-                <th>Advisor</th>
-                <th>Tech</th>
-                <th>Created</th>
-                <th>Total</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
+        <!-- Board view -->
+        <div id="ro-board" class="board"></div>
+
+        <!-- List view (hidden by default) -->
+        <div id="ro-list-view" style="display:none;">
+          <div class="table-wrap">
+            <table class="data-table" id="ro-table">
+              <thead>
+                <tr>
+                  <th>RO #</th>
+                  <th>Customer</th>
+                  <th>Vehicle</th>
+                  <th>Status</th>
+                  <th>Advisor</th>
+                  <th>Tech</th>
+                  <th>Created</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
         </div>
 
       </section>

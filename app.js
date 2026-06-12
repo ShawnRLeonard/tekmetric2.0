@@ -295,21 +295,21 @@ function renderDashboard() {
   `).join('');
 }
 
-// ===== Repair Orders =====
+// ===== Repair Orders (Board + List) =====
 
-let roFilter = 'all';
+let roView = 'board'; // 'board' | 'list'
 let roSearchQuery = '';
 
-function renderRepairOrders(filter, query) {
-  if (filter !== undefined) roFilter = filter;
-  if (query !== undefined) roSearchQuery = query;
+const BOARD_COLS = [
+  { status: 'Estimate',    label: 'Estimate',     cls: 'estimate'   },
+  { status: 'Approved',    label: 'Approved',     cls: 'approved'   },
+  { status: 'In Progress', label: 'In Progress',  cls: 'inprogress' },
+  { status: 'Completed',   label: 'Completed',    cls: 'completed'  },
+  { status: 'Invoiced',    label: 'Invoiced',     cls: 'invoiced'   },
+];
 
+function filteredROs() {
   let list = [...repairOrders].sort((a, b) => b.id - a.id);
-
-  if (roFilter !== 'all') {
-    list = list.filter(r => r.status === roFilter);
-  }
-
   if (roSearchQuery) {
     const q = roSearchQuery.toLowerCase();
     list = list.filter(r =>
@@ -320,7 +320,75 @@ function renderRepairOrders(filter, query) {
       r.advisor.toLowerCase().includes(q)
     );
   }
+  return list;
+}
 
+function renderRepairOrders(query) {
+  if (query !== undefined) roSearchQuery = query;
+  if (roView === 'board') renderBoard();
+  else renderList();
+}
+
+function renderBoard() {
+  const list = filteredROs();
+  const board = $('ro-board');
+  board.innerHTML = '';
+
+  BOARD_COLS.forEach(col => {
+    const colROs = list.filter(r => r.status === col.status);
+    const colEl = document.createElement('div');
+    colEl.className = 'board-col';
+    colEl.innerHTML = `
+      <div class="board-col-header ${col.cls}">
+        <span class="board-col-title">${col.label}</span>
+        <span class="board-col-count">${colROs.length}</span>
+      </div>
+      <div class="board-col-body" id="col-${col.cls}"></div>
+    `;
+    board.appendChild(colEl);
+
+    const body = colEl.querySelector('.board-col-body');
+
+    if (colROs.length === 0) {
+      body.innerHTML = `<div class="board-empty">No ROs</div>`;
+      return;
+    }
+
+    colROs.forEach(ro => {
+      const customer = customers.find(c => c.id === ro.customerId) || {};
+      const vehicle  = vehicles.find(v => v.id === ro.vehicleId)   || {};
+      const total    = roTotal(ro);
+      const serviceNames = ro.services.map(s => s.name).join(', ');
+      const needsAuth = ro.status === 'Estimate';
+
+      const card = document.createElement('div');
+      card.className = 'ro-card';
+      card.innerHTML = `
+        <div class="ro-card-top">
+          <span class="ro-card-num">#${ro.id}</span>
+          <span class="ro-card-date">${formatDate(ro.created)}</span>
+        </div>
+        ${needsAuth ? `<div class="ro-card-auth-tag">⚠ Requires Authorization</div>` : ''}
+        <div class="ro-card-customer">${customer.firstName || ''} ${customer.lastName || ''}</div>
+        <div class="ro-card-phone">${customer.phone || '—'}</div>
+        <div class="ro-card-vehicle">${vehicle.year || ''} ${vehicle.make || ''} ${vehicle.model || ''} · ${vehicle.color || ''}</div>
+        <div class="ro-card-services">${serviceNames || 'No services added'}</div>
+        <div class="ro-card-footer">
+          <div class="ro-card-staff">
+            <span class="staff-chip">${ro.advisor}</span>
+            <span class="staff-chip">${ro.tech}</span>
+          </div>
+          <span class="ro-card-total">${fmt$(total)}</span>
+        </div>
+      `;
+      card.addEventListener('click', () => openRoDrawer(ro.id));
+      body.appendChild(card);
+    });
+  });
+}
+
+function renderList() {
+  const list = filteredROs();
   const tbody = document.querySelector('#ro-table tbody');
   tbody.innerHTML = '';
 
@@ -334,10 +402,7 @@ function renderRepairOrders(filter, query) {
     tr.innerHTML = `
       <td><strong>#${ro.id}</strong></td>
       <td>${customerName(ro.customerId)}</td>
-      <td>
-        ${vehicleStr(ro.vehicleId)}
-        <span class="text-sm">${(vehicles.find(v => v.id === ro.vehicleId) || {}).color || ''}</span>
-      </td>
+      <td>${vehicleStr(ro.vehicleId)}<span class="text-sm">${(vehicles.find(v => v.id === ro.vehicleId) || {}).color || ''}</span></td>
       <td>${statusBadge(ro.status)}</td>
       <td>${ro.advisor}</td>
       <td>${ro.tech}</td>
@@ -349,16 +414,26 @@ function renderRepairOrders(filter, query) {
   });
 }
 
-// Filter tabs
-document.querySelectorAll('#ro-filter-tabs .filter-tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('#ro-filter-tabs .filter-tab').forEach(t => t.classList.remove('active'));
-    tab.classList.add('active');
-    renderRepairOrders(tab.dataset.filter, undefined);
-  });
+// View toggle
+$('viewBoard').addEventListener('click', () => {
+  roView = 'board';
+  $('viewBoard').classList.add('active');
+  $('viewList').classList.remove('active');
+  $('ro-board').style.display = 'flex';
+  $('ro-list-view').style.display = 'none';
+  renderBoard();
 });
 
-$('ro-search').addEventListener('input', e => renderRepairOrders(undefined, e.target.value));
+$('viewList').addEventListener('click', () => {
+  roView = 'list';
+  $('viewList').classList.add('active');
+  $('viewBoard').classList.remove('active');
+  $('ro-board').style.display = 'none';
+  $('ro-list-view').style.display = 'block';
+  renderList();
+});
+
+$('ro-search').addEventListener('input', e => renderRepairOrders(e.target.value));
 
 // ===== RO Drawer =====
 
