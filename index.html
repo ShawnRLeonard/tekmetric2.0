@@ -12,143 +12,363 @@
 
 <div class="app">
 
-  <!-- ======= SIDEBAR ======= -->
-  <aside class="sidebar" id="sidebar">
-    <div class="sidebar-header">
-      <div class="logo">
-        <div class="logo-icon">🔧</div>
-        <div>
-          <div class="logo-name">CarTech</div>
-          <div class="logo-sub">Shop Manager</div>
-        </div>
-      </div>
+  <!-- ======= TOPBAR (full width, dark) ======= -->
+  <header class="topbar" id="topbar">
+    <button class="menu-toggle" id="menuToggle">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+
+    <div class="topbar-logo">
+      <div class="topbar-logo-icon">🔧</div>
+      <span class="topbar-logo-text">CarTech</span>
     </div>
 
-    <nav class="sidebar-nav">
-      <span class="nav-section">Main</span>
-
-      <a href="#" class="nav-item active" data-page="dashboard">
-        <span class="nav-icon">
-          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-        </span>
-        Dashboard
-      </a>
-
-      <a href="#" class="nav-item" data-page="repair-orders">
-        <span class="nav-icon">
-          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
-        </span>
-        Repair Orders
-        <span class="nav-badge" id="ro-badge">3</span>
-      </a>
-
-      <a href="#" class="nav-item" data-page="appointments">
-        <span class="nav-icon">
-          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        </span>
-        Appointments
-      </a>
-
-      <span class="nav-section">Records</span>
-
-      <a href="#" class="nav-item" data-page="customers">
-        <span class="nav-icon">
-          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
-        </span>
-        Customers
-      </a>
-
-      <a href="#" class="nav-item" data-page="vehicles">
-        <span class="nav-icon">
-          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v9a2 2 0 01-2 2h-3"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>
-        </span>
-        Vehicles
-      </a>
-
-      <span class="nav-section">Billing</span>
-
-      <a href="#" class="nav-item" data-page="invoices">
-        <span class="nav-icon">
-          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
-        </span>
-        Invoices
-      </a>
-    </nav>
-
-    <div class="sidebar-footer">
-      <div class="user-info">
-        <div class="user-avatar">SL</div>
-        <div>
-          <div class="user-name">Shawn Leonard</div>
-          <div class="user-role">Tech / Web Admin</div>
-        </div>
-      </div>
+    <div class="topbar-search-wrap">
+      <svg class="topbar-search-icon" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="globalSearch" class="topbar-search-input" placeholder="Search vehicles, customers, RO's, and more...">
     </div>
-  </aside>
 
-  <!-- ======= MAIN ======= -->
-  <main class="main">
+    <button class="topbar-recent-ros" id="recentRosBtn">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v9a2 2 0 01-2 2h-3"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>
+      Recent ROs
+      <svg width="10" height="6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4"/></svg>
+    </button>
 
-    <!-- Top Bar -->
-    <header class="topbar">
-      <button class="menu-toggle" id="menuToggle">☰</button>
-      <h1 class="page-title" id="pageTitle">Dashboard</h1>
-      <div class="topbar-right">
-        <div class="search-box">
-          <input type="text" id="globalSearch" placeholder="Search customers, ROs, vehicles...">
-        </div>
-        <button class="btn btn-primary" id="newRoBtn">+ New RO</button>
-      </div>
-    </header>
+    <div class="topbar-spacer"></div>
 
-    <!-- Pages -->
-    <div class="page-content">
+    <div class="topbar-actions">
+      <button class="topbar-action" title="Support">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <span>Support</span>
+      </button>
+      <button class="topbar-action topbar-action-notif" title="Notifications">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+        <span class="notif-badge" id="notifBadge">3</span>
+      </button>
+      <button class="topbar-action" title="Messages">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        <span>Message</span>
+      </button>
+      <button class="topbar-action" title="Active Time Clocks">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span>Active Time Clocks</span>
+      </button>
+    </div>
 
-      <!-- ===== DASHBOARD ===== -->
-      <section id="page-dashboard" class="page active">
+    <button class="topbar-shop">
+      CarTech Automotive, LLC
+      <svg width="10" height="6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4"/></svg>
+    </button>
 
-        <div class="stat-grid">
-          <div class="stat-card">
-            <div class="stat-label">Open Repair Orders</div>
-            <div class="stat-value" id="stat-open-ro">—</div>
-            <div class="stat-sub">Active work in shop</div>
-            <span class="stat-icon">📋</span>
-          </div>
-          <div class="stat-card yellow">
-            <div class="stat-label">Today's Appointments</div>
-            <div class="stat-value" id="stat-today-appts">—</div>
-            <div class="stat-sub">Scheduled for today</div>
-            <span class="stat-icon">📅</span>
-          </div>
-          <div class="stat-card green">
-            <div class="stat-label">Month Revenue</div>
-            <div class="stat-value" id="stat-month-rev">—</div>
-            <div class="stat-sub">Invoiced this month</div>
-            <span class="stat-icon">💰</span>
-          </div>
-          <div class="stat-card purple">
-            <div class="stat-label">Avg Repair Order</div>
-            <div class="stat-value" id="stat-aro">—</div>
-            <div class="stat-sub">Average RO value</div>
-            <span class="stat-icon">📊</span>
-          </div>
-        </div>
+    <div class="topbar-user-avatar">SL</div>
+  </header>
 
-        <div class="dash-grid">
-          <!-- Recent ROs -->
+  <!-- ======= APP BODY (sidebar + main) ======= -->
+  <div class="app-body">
+
+    <!-- ======= SIDEBAR ======= -->
+    <aside class="sidebar" id="sidebar">
+      <nav class="sidebar-nav">
+
+        <a href="#" class="nav-item active" data-page="dashboard">
+          <span class="nav-icon">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          </span>
+          Shop Dashboard
+        </a>
+
+        <a href="#" class="nav-item" data-page="repair-orders">
+          <span class="nav-icon">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="18" rx="1"/><rect x="14" y="3" width="7" height="10" rx="1"/><rect x="14" y="17" width="7" height="4" rx="1"/></svg>
+          </span>
+          Job Board
+          <span class="nav-badge" id="ro-badge">3</span>
+        </a>
+
+        <a href="#" class="nav-item" data-page="tech-board">
+          <span class="nav-icon">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+          </span>
+          Tech Board
+        </a>
+
+        <span class="nav-section">Main</span>
+
+        <a href="#" class="nav-item" data-page="appointments">
+          <span class="nav-icon">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </span>
+          Appointments
+        </a>
+
+        <a href="#" class="nav-item" data-page="orders">
+          <span class="nav-icon">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </span>
+          Orders
+        </a>
+
+        <a href="#" class="nav-item" data-page="reports">
+          <span class="nav-icon">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          </span>
+          Reports
+        </a>
+
+        <span class="nav-section">Manage</span>
+
+        <a href="#" class="nav-item" data-page="customers">
+          <span class="nav-icon">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          </span>
+          Customers
+        </a>
+
+        <a href="#" class="nav-item" data-page="vendors">
+          <span class="nav-icon">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </span>
+          Vendors
+        </a>
+
+        <a href="#" class="nav-item" data-page="canned-jobs">
+          <span class="nav-icon">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </span>
+          Canned Jobs
+        </a>
+
+        <a href="#" class="nav-item" data-page="inspections">
+          <span class="nav-icon">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+          </span>
+          Inspections
+        </a>
+
+        <a href="#" class="nav-item" data-page="vehicles">
+          <span class="nav-icon">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v9a2 2 0 01-2 2h-3"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>
+          </span>
+          Vehicles
+        </a>
+
+        <a href="#" class="nav-item" data-page="invoices">
+          <span class="nav-icon">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+          </span>
+          Invoices
+        </a>
+
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-info">
+          <div class="user-avatar">SL</div>
           <div>
-            <div class="section-header">
-              <div class="section-title">Recent Repair Orders</div>
-              <button class="btn btn-ghost btn-sm" data-page-link="repair-orders">View All →</button>
+            <div class="user-name">Shawn Leonard</div>
+            <div class="user-role">Tech / Web Admin</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ======= MAIN ======= -->
+    <main class="main">
+      <div class="page-content">
+
+        <!-- ===== DASHBOARD ===== -->
+        <section id="page-dashboard" class="page active">
+
+          <div class="dash-page-header">
+            <h1 class="dash-page-title">Shop Dashboard</h1>
+            <button class="btn btn-primary btn-sm" id="newRoBtn">+ New RO</button>
+          </div>
+
+          <div class="dash-tabs" id="dashTabs">
+            <button class="dash-tab active" data-tab="overview">Shop Overview</button>
+            <button class="dash-tab" data-tab="activity">Activity Feed</button>
+            <button class="dash-tab" data-tab="hours">My Hours</button>
+            <button class="dash-tab" data-tab="timesheet">My Timesheet</button>
+            <button class="dash-tab" data-tab="commission">My Commission</button>
+          </div>
+
+          <!-- Shop Overview pane -->
+          <div id="dash-tab-overview" class="dash-pane active">
+            <div class="stat-grid">
+              <div class="stat-card">
+                <div class="stat-label">Open Repair Orders</div>
+                <div class="stat-value" id="stat-open-ro">—</div>
+                <div class="stat-sub">Active work in shop</div>
+                <span class="stat-icon">📋</span>
+              </div>
+              <div class="stat-card yellow">
+                <div class="stat-label">Today's Appointments</div>
+                <div class="stat-value" id="stat-today-appts">—</div>
+                <div class="stat-sub">Scheduled for today</div>
+                <span class="stat-icon">📅</span>
+              </div>
+              <div class="stat-card green">
+                <div class="stat-label">Month Revenue</div>
+                <div class="stat-value" id="stat-month-rev">—</div>
+                <div class="stat-sub">Invoiced this month</div>
+                <span class="stat-icon">💰</span>
+              </div>
+              <div class="stat-card purple">
+                <div class="stat-label">Avg Repair Order</div>
+                <div class="stat-value" id="stat-aro">—</div>
+                <div class="stat-sub">Average RO value</div>
+                <span class="stat-icon">📊</span>
+              </div>
             </div>
+
+            <div class="dash-grid">
+              <div>
+                <div class="section-header">
+                  <div class="section-title">Recent Repair Orders</div>
+                  <button class="btn btn-ghost btn-sm" data-page-link="repair-orders">View All →</button>
+                </div>
+                <div class="table-wrap">
+                  <table class="data-table" id="dash-ro-table">
+                    <thead>
+                      <tr>
+                        <th>RO #</th>
+                        <th>Customer</th>
+                        <th>Vehicle</th>
+                        <th>Status</th>
+                        <th>Total</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+              </div>
+              <div>
+                <div class="section-header">
+                  <div class="section-title">Today's Schedule</div>
+                  <button class="btn btn-ghost btn-sm" data-page-link="appointments">Calendar →</button>
+                </div>
+                <div class="schedule-list" id="today-schedule"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Activity Feed pane -->
+          <div id="dash-tab-activity" class="dash-pane">
+            <div class="activity-panel">
+              <div class="activity-panel-header">
+                <div class="activity-panel-title">
+                  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                  Activity Feed Report
+                </div>
+                <button class="activity-date-btn">
+                  <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                  <span id="activityDateRange">JUN 7, 2026 – JUN 12, 2026</span>
+                  <span class="activity-date-preset">THIS WEEK</span>
+                  <svg width="10" height="6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4"/></svg>
+                </button>
+              </div>
+
+              <div class="activity-sub-tabs">
+                <button class="activity-sub-tab active" data-atab="ro">Repair Orders</button>
+                <button class="activity-sub-tab" data-atab="inv">Inventory</button>
+              </div>
+
+              <div class="activity-toolbar">
+                <div class="activity-search-wrap">
+                  <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                  <input type="text" id="activitySearch" class="activity-search-input" placeholder="Search shop activity">
+                </div>
+                <button class="filter-chip">
+                  <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+                  Activity Category
+                </button>
+                <button class="activity-refresh-btn" title="Refresh">
+                  <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
+                </button>
+              </div>
+
+              <div id="activity-feed-list" class="activity-feed-list"></div>
+            </div>
+          </div>
+
+          <!-- My Hours pane -->
+          <div id="dash-tab-hours" class="dash-pane">
+            <div class="dash-placeholder">
+              <div class="dash-placeholder-icon">⏱</div>
+              <div class="dash-placeholder-title">My Hours</div>
+              <div class="dash-placeholder-sub">Clock in/out and view your time logs.</div>
+            </div>
+          </div>
+
+          <!-- My Timesheet pane -->
+          <div id="dash-tab-timesheet" class="dash-pane">
+            <div class="dash-placeholder">
+              <div class="dash-placeholder-icon">📋</div>
+              <div class="dash-placeholder-title">My Timesheet</div>
+              <div class="dash-placeholder-sub">Weekly timesheet coming soon.</div>
+            </div>
+          </div>
+
+          <!-- My Commission pane -->
+          <div id="dash-tab-commission" class="dash-pane">
+            <div class="dash-placeholder">
+              <div class="dash-placeholder-icon">💰</div>
+              <div class="dash-placeholder-title">My Commission</div>
+              <div class="dash-placeholder-sub">Commission tracking coming soon.</div>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- ===== REPAIR ORDERS / JOB BOARD ===== -->
+        <section id="page-repair-orders" class="page">
+
+          <div class="board-toolbar">
+            <div class="board-toolbar-left">
+              <button class="filter-chip">
+                RO Label
+                <svg width="10" height="6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4"/></svg>
+              </button>
+              <button class="filter-chip">
+                Employee
+                <svg width="10" height="6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4"/></svg>
+              </button>
+              <button class="filter-chip">
+                Appt Type
+                <svg width="10" height="6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4"/></svg>
+              </button>
+            </div>
+            <div class="board-toolbar-right">
+              <button class="filter-chip filter-chip-status">
+                Active
+                <svg width="10" height="6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4"/></svg>
+              </button>
+              <div class="view-toggle">
+                <button class="view-btn active" id="viewBoard" title="Board view">
+                  <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="18" rx="1"/><rect x="14" y="3" width="7" height="10" rx="1"/><rect x="14" y="17" width="7" height="4" rx="1"/></svg>
+                </button>
+                <button class="view-btn" id="viewList" title="List view">
+                  <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+                </button>
+              </div>
+              <button class="btn btn-primary" id="newRoBtn2">+ Repair Order</button>
+            </div>
+          </div>
+
+          <div id="ro-board" class="board"></div>
+
+          <div id="ro-list-view" style="display:none;">
             <div class="table-wrap">
-              <table class="data-table" id="dash-ro-table">
+              <table class="data-table" id="ro-table">
                 <thead>
                   <tr>
                     <th>RO #</th>
                     <th>Customer</th>
                     <th>Vehicle</th>
                     <th>Status</th>
+                    <th>Advisor</th>
+                    <th>Tech</th>
+                    <th>Created</th>
                     <th>Total</th>
                   </tr>
                 </thead>
@@ -157,193 +377,189 @@
             </div>
           </div>
 
-          <!-- Today's Schedule -->
-          <div>
-            <div class="section-header">
-              <div class="section-title">Today's Schedule</div>
-              <button class="btn btn-ghost btn-sm" data-page-link="appointments">Calendar →</button>
-            </div>
-            <div class="schedule-list" id="today-schedule"></div>
+        </section>
+
+        <!-- ===== TECH BOARD ===== -->
+        <section id="page-tech-board" class="page">
+          <div class="dash-placeholder" style="margin-top:60px;">
+            <div class="dash-placeholder-icon">🔧</div>
+            <div class="dash-placeholder-title">Tech Board</div>
+            <div class="dash-placeholder-sub">Technician job assignment view coming soon.</div>
           </div>
-        </div>
+        </section>
 
-      </section>
+        <!-- ===== APPOINTMENTS ===== -->
+        <section id="page-appointments" class="page">
 
-      <!-- ===== REPAIR ORDERS / JOB BOARD ===== -->
-      <section id="page-repair-orders" class="page">
-
-        <div class="board-toolbar">
-          <div class="board-toolbar-left">
-            <div class="view-toggle">
-              <button class="view-btn active" id="viewBoard">
-                <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="18" rx="1"/><rect x="14" y="3" width="7" height="10" rx="1"/><rect x="14" y="17" width="7" height="4" rx="1"/></svg>
-                Board
-              </button>
-              <button class="view-btn" id="viewList">
-                <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-                List
-              </button>
+          <div class="page-toolbar">
+            <div class="page-toolbar-left">
+              <button class="btn btn-ghost btn-sm" id="appt-prev">← Prev</button>
+              <div style="font-family:'Oswald',sans-serif;font-size:16px;font-weight:600;padding:0 8px;" id="appt-week-label">Week</div>
+              <button class="btn btn-ghost btn-sm" id="appt-next">Next →</button>
             </div>
-            <div class="search-wrap">
-              <input type="text" class="inline-search" id="ro-search" placeholder="Search ROs...">
+            <div class="page-toolbar-right">
+              <button class="btn btn-primary" id="newApptBtn">+ New Appointment</button>
             </div>
           </div>
-          <div class="board-toolbar-right">
-            <button class="btn btn-primary" id="newRoBtn2">+ New RO</button>
+
+          <div id="appt-calendar"></div>
+
+        </section>
+
+        <!-- ===== ORDERS ===== -->
+        <section id="page-orders" class="page">
+          <div class="dash-placeholder" style="margin-top:60px;">
+            <div class="dash-placeholder-icon">📄</div>
+            <div class="dash-placeholder-title">Orders</div>
+            <div class="dash-placeholder-sub">Parts and purchase orders coming soon.</div>
           </div>
-        </div>
+        </section>
 
-        <!-- Board view -->
-        <div id="ro-board" class="board"></div>
+        <!-- ===== REPORTS ===== -->
+        <section id="page-reports" class="page">
+          <div class="dash-placeholder" style="margin-top:60px;">
+            <div class="dash-placeholder-icon">📊</div>
+            <div class="dash-placeholder-title">Reports</div>
+            <div class="dash-placeholder-sub">Shop performance reports coming soon.</div>
+          </div>
+        </section>
 
-        <!-- List view (hidden by default) -->
-        <div id="ro-list-view" style="display:none;">
+        <!-- ===== CUSTOMERS ===== -->
+        <section id="page-customers" class="page">
+
+          <div class="page-toolbar">
+            <div class="page-toolbar-left">
+              <div class="search-wrap">
+                <input type="text" class="inline-search" id="customer-search" placeholder="Search customers...">
+              </div>
+            </div>
+            <div class="page-toolbar-right">
+              <button class="btn btn-primary" id="newCustomerBtn">+ Add Customer</button>
+            </div>
+          </div>
+
           <div class="table-wrap">
-            <table class="data-table" id="ro-table">
+            <table class="data-table" id="customers-table">
               <thead>
                 <tr>
-                  <th>RO #</th>
-                  <th>Customer</th>
-                  <th>Vehicle</th>
-                  <th>Status</th>
-                  <th>Advisor</th>
-                  <th>Tech</th>
-                  <th>Created</th>
-                  <th>Total</th>
+                  <th>Name</th>
+                  <th>Phone</th>
+                  <th>Email</th>
+                  <th>Vehicles</th>
+                  <th>Last Visit</th>
+                  <th>Total Spent</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody></tbody>
             </table>
           </div>
-        </div>
 
-      </section>
+        </section>
 
-      <!-- ===== APPOINTMENTS ===== -->
-      <section id="page-appointments" class="page">
-
-        <div class="page-toolbar">
-          <div class="page-toolbar-left">
-            <button class="btn btn-ghost btn-sm" id="appt-prev">← Prev</button>
-            <div style="font-family:'Oswald',sans-serif;font-size:16px;font-weight:600;padding:0 8px;" id="appt-week-label">Week</div>
-            <button class="btn btn-ghost btn-sm" id="appt-next">Next →</button>
+        <!-- ===== VENDORS ===== -->
+        <section id="page-vendors" class="page">
+          <div class="dash-placeholder" style="margin-top:60px;">
+            <div class="dash-placeholder-icon">🏪</div>
+            <div class="dash-placeholder-title">Vendors</div>
+            <div class="dash-placeholder-sub">Vendor management coming soon.</div>
           </div>
-          <div class="page-toolbar-right">
-            <button class="btn btn-primary" id="newApptBtn">+ New Appointment</button>
+        </section>
+
+        <!-- ===== CANNED JOBS ===== -->
+        <section id="page-canned-jobs" class="page">
+          <div class="dash-placeholder" style="margin-top:60px;">
+            <div class="dash-placeholder-icon">⭐</div>
+            <div class="dash-placeholder-title">Canned Jobs</div>
+            <div class="dash-placeholder-sub">Saved job templates coming soon.</div>
           </div>
-        </div>
+        </section>
 
-        <div id="appt-calendar"></div>
+        <!-- ===== INSPECTIONS ===== -->
+        <section id="page-inspections" class="page">
+          <div class="dash-placeholder" style="margin-top:60px;">
+            <div class="dash-placeholder-icon">✅</div>
+            <div class="dash-placeholder-title">Inspections</div>
+            <div class="dash-placeholder-sub">Digital inspections coming soon.</div>
+          </div>
+        </section>
 
-      </section>
+        <!-- ===== VEHICLES ===== -->
+        <section id="page-vehicles" class="page">
 
-      <!-- ===== CUSTOMERS ===== -->
-      <section id="page-customers" class="page">
-
-        <div class="page-toolbar">
-          <div class="page-toolbar-left">
-            <div class="search-wrap">
-              <input type="text" class="inline-search" id="customer-search" placeholder="Search customers...">
+          <div class="page-toolbar">
+            <div class="page-toolbar-left">
+              <div class="search-wrap">
+                <input type="text" class="inline-search" id="vehicle-search" placeholder="Search vehicles...">
+              </div>
+            </div>
+            <div class="page-toolbar-right">
+              <button class="btn btn-primary" id="newVehicleBtn">+ Add Vehicle</button>
             </div>
           </div>
-          <div class="page-toolbar-right">
-            <button class="btn btn-primary" id="newCustomerBtn">+ Add Customer</button>
+
+          <div class="table-wrap">
+            <table class="data-table" id="vehicles-table">
+              <thead>
+                <tr>
+                  <th>Year / Make / Model</th>
+                  <th>Color</th>
+                  <th>VIN</th>
+                  <th>Mileage</th>
+                  <th>Owner</th>
+                  <th>ROs</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
           </div>
-        </div>
 
-        <div class="table-wrap">
-          <table class="data-table" id="customers-table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Phone</th>
-                <th>Email</th>
-                <th>Vehicles</th>
-                <th>Last Visit</th>
-                <th>Total Spent</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
+        </section>
 
-      </section>
+        <!-- ===== INVOICES ===== -->
+        <section id="page-invoices" class="page">
 
-      <!-- ===== VEHICLES ===== -->
-      <section id="page-vehicles" class="page">
-
-        <div class="page-toolbar">
-          <div class="page-toolbar-left">
-            <div class="search-wrap">
-              <input type="text" class="inline-search" id="vehicle-search" placeholder="Search vehicles...">
+          <div class="page-toolbar">
+            <div class="page-toolbar-left">
+              <div class="filter-tabs" id="inv-filter-tabs">
+                <button class="filter-tab active" data-filter="all">All</button>
+                <button class="filter-tab" data-filter="Paid">Paid</button>
+                <button class="filter-tab" data-filter="Unpaid">Unpaid</button>
+                <button class="filter-tab" data-filter="Overdue">Overdue</button>
+              </div>
+            </div>
+            <div class="page-toolbar-right">
+              <div class="search-wrap">
+                <input type="text" class="inline-search" id="inv-search" placeholder="Search invoices...">
+              </div>
             </div>
           </div>
-          <div class="page-toolbar-right">
-            <button class="btn btn-primary" id="newVehicleBtn">+ Add Vehicle</button>
+
+          <div class="table-wrap">
+            <table class="data-table" id="invoices-table">
+              <thead>
+                <tr>
+                  <th>Invoice #</th>
+                  <th>Customer</th>
+                  <th>Vehicle</th>
+                  <th>RO #</th>
+                  <th>Date</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
           </div>
-        </div>
 
-        <div class="table-wrap">
-          <table class="data-table" id="vehicles-table">
-            <thead>
-              <tr>
-                <th>Year / Make / Model</th>
-                <th>Color</th>
-                <th>VIN</th>
-                <th>Mileage</th>
-                <th>Owner</th>
-                <th>ROs</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
+        </section>
 
-      </section>
+      </div><!-- /page-content -->
+    </main>
 
-      <!-- ===== INVOICES ===== -->
-      <section id="page-invoices" class="page">
-
-        <div class="page-toolbar">
-          <div class="page-toolbar-left">
-            <div class="filter-tabs" id="inv-filter-tabs">
-              <button class="filter-tab active" data-filter="all">All</button>
-              <button class="filter-tab" data-filter="Paid">Paid</button>
-              <button class="filter-tab" data-filter="Unpaid">Unpaid</button>
-              <button class="filter-tab" data-filter="Overdue">Overdue</button>
-            </div>
-          </div>
-          <div class="page-toolbar-right">
-            <div class="search-wrap">
-              <input type="text" class="inline-search" id="inv-search" placeholder="Search invoices...">
-            </div>
-          </div>
-        </div>
-
-        <div class="table-wrap">
-          <table class="data-table" id="invoices-table">
-            <thead>
-              <tr>
-                <th>Invoice #</th>
-                <th>Customer</th>
-                <th>Vehicle</th>
-                <th>RO #</th>
-                <th>Date</th>
-                <th>Amount</th>
-                <th>Status</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
-
-      </section>
-
-    </div><!-- /page-content -->
-  </main>
+  </div><!-- /app-body -->
 </div><!-- /app -->
 
 <!-- ======= RO DETAIL DRAWER ======= -->
@@ -366,9 +582,7 @@
     </div>
   </div>
 
-  <div class="drawer-body" id="drawerBody">
-    <!-- Populated by JS -->
-  </div>
+  <div class="drawer-body" id="drawerBody"></div>
 
   <div class="drawer-footer">
     <button class="btn btn-secondary">Print RO</button>
@@ -389,40 +603,28 @@
       <div class="form-grid">
         <div class="form-group">
           <label class="form-label">Customer</label>
-          <select class="form-input" id="newRoCustomer">
-            <option value="">Select customer...</option>
-          </select>
+          <select class="form-input" id="newRoCustomer"><option value="">Select customer...</option></select>
         </div>
         <div class="form-group">
           <label class="form-label">Vehicle</label>
-          <select class="form-input" id="newRoVehicle">
-            <option value="">Select vehicle...</option>
-          </select>
+          <select class="form-input" id="newRoVehicle"><option value="">Select vehicle...</option></select>
         </div>
         <div class="form-group">
           <label class="form-label">Service Advisor</label>
           <select class="form-input" id="newRoAdvisor">
-            <option>Scott</option>
-            <option>Emmanuel</option>
-            <option>Ruben</option>
-            <option>Shawn</option>
+            <option>Scott</option><option>Emmanuel</option><option>Ruben</option><option>Shawn</option>
           </select>
         </div>
         <div class="form-group">
           <label class="form-label">Assigned Tech</label>
           <select class="form-input" id="newRoTech">
-            <option>Emmanuel</option>
-            <option>Ruben</option>
-            <option>Shawn</option>
-            <option>Scott</option>
+            <option>Emmanuel</option><option>Ruben</option><option>Shawn</option><option>Scott</option>
           </select>
         </div>
         <div class="form-group">
           <label class="form-label">Status</label>
           <select class="form-input" id="newRoStatus">
-            <option>Estimate</option>
-            <option>Approved</option>
-            <option selected>In Progress</option>
+            <option>Estimate</option><option>Approved</option><option selected>In Progress</option>
           </select>
         </div>
         <div class="form-group">
@@ -451,30 +653,12 @@
     </div>
     <div class="modal-body">
       <div class="form-grid">
-        <div class="form-group">
-          <label class="form-label">First Name</label>
-          <input type="text" class="form-input" id="custFirstName" placeholder="First">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Last Name</label>
-          <input type="text" class="form-input" id="custLastName" placeholder="Last">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Phone</label>
-          <input type="tel" class="form-input" id="custPhone" placeholder="615-555-0000">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Email</label>
-          <input type="email" class="form-input" id="custEmail" placeholder="email@example.com">
-        </div>
-        <div class="form-group full">
-          <label class="form-label">Address</label>
-          <input type="text" class="form-input" id="custAddress" placeholder="123 Main St, Smyrna, TN 37167">
-        </div>
-        <div class="form-group full">
-          <label class="form-label">Notes</label>
-          <textarea class="form-input" id="custNotes" rows="2" placeholder="Any notes about this customer..."></textarea>
-        </div>
+        <div class="form-group"><label class="form-label">First Name</label><input type="text" class="form-input" id="custFirstName" placeholder="First"></div>
+        <div class="form-group"><label class="form-label">Last Name</label><input type="text" class="form-input" id="custLastName" placeholder="Last"></div>
+        <div class="form-group"><label class="form-label">Phone</label><input type="tel" class="form-input" id="custPhone" placeholder="615-555-0000"></div>
+        <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input" id="custEmail" placeholder="email@example.com"></div>
+        <div class="form-group full"><label class="form-label">Address</label><input type="text" class="form-input" id="custAddress" placeholder="123 Main St, Smyrna, TN 37167"></div>
+        <div class="form-group full"><label class="form-label">Notes</label><textarea class="form-input" id="custNotes" rows="2" placeholder="Any notes about this customer..."></textarea></div>
       </div>
     </div>
     <div class="modal-footer">
@@ -493,55 +677,24 @@
     </div>
     <div class="modal-body">
       <div class="form-grid">
-        <div class="form-group">
-          <label class="form-label">Customer</label>
-          <select class="form-input" id="apptCustomer">
-            <option value="">Select customer...</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Vehicle</label>
-          <select class="form-input" id="apptVehicle">
-            <option value="">Select vehicle...</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Date</label>
-          <input type="date" class="form-input" id="apptDate">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Time</label>
+        <div class="form-group"><label class="form-label">Customer</label><select class="form-input" id="apptCustomer"><option value="">Select customer...</option></select></div>
+        <div class="form-group"><label class="form-label">Vehicle</label><select class="form-input" id="apptVehicle"><option value="">Select vehicle...</option></select></div>
+        <div class="form-group"><label class="form-label">Date</label><input type="date" class="form-input" id="apptDate"></div>
+        <div class="form-group"><label class="form-label">Time</label>
           <select class="form-input" id="apptTime">
-            <option value="08:00">8:00 AM</option>
-            <option value="09:00">9:00 AM</option>
-            <option value="10:00">10:00 AM</option>
-            <option value="11:00">11:00 AM</option>
-            <option value="12:00">12:00 PM</option>
-            <option value="13:00">1:00 PM</option>
-            <option value="14:00">2:00 PM</option>
-            <option value="15:00">3:00 PM</option>
-            <option value="16:00">4:00 PM</option>
+            <option value="08:00">8:00 AM</option><option value="09:00">9:00 AM</option><option value="10:00">10:00 AM</option>
+            <option value="11:00">11:00 AM</option><option value="12:00">12:00 PM</option><option value="13:00">1:00 PM</option>
+            <option value="14:00">2:00 PM</option><option value="15:00">3:00 PM</option><option value="16:00">4:00 PM</option>
           </select>
         </div>
-        <div class="form-group">
-          <label class="form-label">Service</label>
-          <input type="text" class="form-input" id="apptService" placeholder="e.g. Oil Change">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Duration</label>
+        <div class="form-group"><label class="form-label">Service</label><input type="text" class="form-input" id="apptService" placeholder="e.g. Oil Change"></div>
+        <div class="form-group"><label class="form-label">Duration</label>
           <select class="form-input" id="apptDuration">
-            <option value="0.5">30 min</option>
-            <option value="1" selected>1 hour</option>
-            <option value="1.5">1.5 hours</option>
-            <option value="2">2 hours</option>
-            <option value="3">3 hours</option>
-            <option value="4">4 hours</option>
+            <option value="0.5">30 min</option><option value="1" selected>1 hour</option><option value="1.5">1.5 hours</option>
+            <option value="2">2 hours</option><option value="3">3 hours</option><option value="4">4 hours</option>
           </select>
         </div>
-        <div class="form-group full">
-          <label class="form-label">Notes</label>
-          <textarea class="form-input" id="apptNotes" rows="2" placeholder="Drop-off info, special instructions..."></textarea>
-        </div>
+        <div class="form-group full"><label class="form-label">Notes</label><textarea class="form-input" id="apptNotes" rows="2" placeholder="Drop-off info, special instructions..."></textarea></div>
       </div>
     </div>
     <div class="modal-footer">

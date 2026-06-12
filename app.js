@@ -197,18 +197,8 @@ function navigate(page) {
   if (pageEl) pageEl.classList.add('active');
   if (navEl) navEl.classList.add('active');
 
-  const titles = {
-    'dashboard':     'Dashboard',
-    'repair-orders': 'Repair Orders',
-    'appointments':  'Appointments',
-    'customers':     'Customers',
-    'vehicles':      'Vehicles',
-    'invoices':      'Invoices',
-  };
-  $('pageTitle').textContent = titles[page] || page;
   currentPage = page;
 
-  // Render on navigate
   if (page === 'dashboard')     renderDashboard();
   if (page === 'repair-orders') renderRepairOrders();
   if (page === 'appointments')  renderAppointments();
@@ -240,6 +230,23 @@ $('menuToggle').addEventListener('click', () => {
   $('sidebarOverlay').style.display = $('sidebar').classList.contains('open') ? 'block' : 'none';
 });
 
+// ===== Activity Feed Data =====
+
+const activityFeed = [
+  { id: 1,  user: 'Emmanuel S.', action: 'added a job to the estimate.',                                           roId: 1006, timeAgo: '1h ago',  category: 'Estimate',  catClass: 'cat-estimate' },
+  { id: 2,  user: 'Scott W.',    action: 'updated the customer information.',                                      roId: 1001, timeAgo: '1h ago',  category: 'Other',     catClass: 'cat-other'    },
+  { id: 3,  user: 'Ruben S.',    action: 'updated the customer information.',                                      roId: 1002, timeAgo: '2h ago',  category: 'Other',     catClass: 'cat-other'    },
+  { id: 4,  user: 'Emmanuel S.', action: 'created Repair Order #1006: Ana Morales\'s 2022 Toyota Corolla · White', roId: 1006, timeAgo: '2h ago',  category: 'RO Status', catClass: 'cat-ro-status'},
+  { id: 5,  user: 'Ruben S.',    action: 'created Repair Order #1002: James Wilson\'s 2016 Ford F-150 · Black',    roId: 1002, timeAgo: '2h ago',  category: 'RO Status', catClass: 'cat-ro-status'},
+  { id: 6,  user: 'Scott W.',    action: 'sent RO #1003 to A/R with date June 10, 2026',                          roId: 1003, timeAgo: '3h ago',  category: 'RO Status', catClass: 'cat-ro-status'},
+  { id: 7,  user: 'Ruben S.',    action: 'received authorization from customer on job(s): Brake Inspection – $45.00', roId: 1002, timeAgo: '3h ago', category: 'Authorization', catClass: 'cat-auth' },
+  { id: 8,  user: 'Emmanuel S.', action: 'added a job to the estimate.',                                           roId: 1003, timeAgo: '3h ago',  category: 'Estimate',  catClass: 'cat-estimate' },
+  { id: 9,  user: 'Scott W.',    action: 'changed RO Default Labor Rate from $149.00 to $125.00.',                roId: 1001, timeAgo: '4h ago',  category: 'Estimate',  catClass: 'cat-estimate' },
+  { id: 10, user: 'Shawn L.',    action: 'marked RO #1005 as Completed.',                                         roId: 1005, timeAgo: '5h ago',  category: 'RO Status', catClass: 'cat-ro-status'},
+  { id: 11, user: 'Emmanuel S.', action: 'updated vehicle mileage to 78,450 mi.',                                 roId: 1001, timeAgo: '5h ago',  category: 'Other',     catClass: 'cat-other'    },
+  { id: 12, user: 'Scott W.',    action: 'sent invoice #2001 to Robert Johnson.',                                  roId: 1005, timeAgo: '6h ago',  category: 'Invoice',   catClass: 'cat-invoice'  },
+];
+
 // ===== Dashboard =====
 
 function renderDashboard() {
@@ -248,16 +255,12 @@ function renderDashboard() {
   const monthRevenue = repairOrders
     .filter(r => r.status === 'Invoiced' || r.status === 'Completed')
     .reduce((s, r) => s + roTotal(r), 0);
-  const aro = repairOrders.length ? roTotal(repairOrders[0]) : 0; // simplified
 
   $('stat-open-ro').textContent = openROs;
   $('stat-today-appts').textContent = todayAppts;
-  $('stat-month-rev').textContent = '$' + Math.round(monthRevenue / 100) * 100 === 0
-    ? fmt$(monthRevenue)
-    : fmt$(monthRevenue);
+  $('stat-month-rev').textContent = fmt$(monthRevenue);
   $('stat-aro').textContent = fmt$(repairOrders.reduce((s, r) => s + roTotal(r), 0) / repairOrders.length);
 
-  // Badge count
   $('ro-badge').textContent = repairOrders.filter(r => r.status === 'In Progress').length;
 
   // Recent ROs table
@@ -281,19 +284,75 @@ function renderDashboard() {
   const todayList = appointments.filter(a => a.date === TODAY).sort((a, b) => a.time.localeCompare(b.time));
   if (todayList.length === 0) {
     scheduleEl.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📅</div><div class="empty-state-text">No appointments today</div></div>`;
+  } else {
+    scheduleEl.innerHTML = todayList.map(a => `
+      <div class="schedule-item">
+        <div class="schedule-time">${fmtTime(a.time)}</div>
+        <div class="schedule-info">
+          <div class="schedule-name">${customerName(a.customerId)}</div>
+          <div class="schedule-vehicle">${vehicleStr(a.vehicleId)}</div>
+        </div>
+        <div class="schedule-service">${a.service}</div>
+      </div>
+    `).join('');
+  }
+
+  renderActivityFeed();
+}
+
+function renderActivityFeed(query) {
+  const list = query
+    ? activityFeed.filter(a =>
+        a.user.toLowerCase().includes(query.toLowerCase()) ||
+        a.action.toLowerCase().includes(query.toLowerCase()) ||
+        String(a.roId).includes(query)
+      )
+    : activityFeed;
+
+  const el = $('activity-feed-list');
+  if (!el) return;
+
+  if (list.length === 0) {
+    el.innerHTML = `<div class="empty-state" style="padding:40px;"><div class="empty-state-text">No activity found</div></div>`;
     return;
   }
-  scheduleEl.innerHTML = todayList.map(a => `
-    <div class="schedule-item">
-      <div class="schedule-time">${fmtTime(a.time)}</div>
-      <div class="schedule-info">
-        <div class="schedule-name">${customerName(a.customerId)}</div>
-        <div class="schedule-vehicle">${vehicleStr(a.vehicleId)}</div>
+
+  el.innerHTML = list.map(item => `
+    <div class="activity-item">
+      <div class="activity-item-body">
+        <div class="activity-item-text"><strong>${item.user}</strong> ${item.action}</div>
+        <div class="activity-item-meta">
+          <a href="#">RO #${item.roId}</a> &nbsp;·&nbsp; ${item.timeAgo}
+        </div>
       </div>
-      <div class="schedule-service">${a.service}</div>
+      <span class="activity-cat-badge ${item.catClass}">${item.category}</span>
     </div>
   `).join('');
 }
+
+// Dashboard tabs
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.dash-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.dash-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.dash-pane').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      const pane = $(`dash-tab-${tab.dataset.tab}`);
+      if (pane) pane.classList.add('active');
+      if (tab.dataset.tab === 'activity') renderActivityFeed();
+    });
+  });
+
+  document.querySelectorAll('.activity-sub-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.activity-sub-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+    });
+  });
+
+  const actSearch = $('activitySearch');
+  if (actSearch) actSearch.addEventListener('input', e => renderActivityFeed(e.target.value));
+});
 
 // ===== Repair Orders (Board + List) =====
 
@@ -301,12 +360,17 @@ let roView = 'board'; // 'board' | 'list'
 let roSearchQuery = '';
 
 const BOARD_COLS = [
-  { status: 'Estimate',    label: 'Estimate',     cls: 'estimate'   },
-  { status: 'Approved',    label: 'Approved',     cls: 'approved'   },
-  { status: 'In Progress', label: 'In Progress',  cls: 'inprogress' },
-  { status: 'Completed',   label: 'Completed',    cls: 'completed'  },
-  { status: 'Invoiced',    label: 'Invoiced',     cls: 'invoiced'   },
+  { label: 'Estimates',        cls: 'estimate',   statuses: ['Estimate', 'Approved']   },
+  { label: 'Work In Progress', cls: 'inprogress', statuses: ['In Progress']            },
+  { label: 'Completed',        cls: 'completed',  statuses: ['Completed', 'Invoiced']  },
 ];
+
+const TECH_COLORS = {
+  'Emmanuel': '#3b82f6',
+  'Ruben':    '#8b5cf6',
+  'Shawn':    '#14b8a6',
+  'Scott':    '#f97316',
+};
 
 function filteredROs() {
   let list = [...repairOrders].sort((a, b) => b.id - a.id);
@@ -335,13 +399,20 @@ function renderBoard() {
   board.innerHTML = '';
 
   BOARD_COLS.forEach(col => {
-    const colROs = list.filter(r => r.status === col.status);
+    const colROs = list.filter(r => col.statuses.includes(r.status));
     const colEl = document.createElement('div');
     colEl.className = 'board-col';
     colEl.innerHTML = `
       <div class="board-col-header ${col.cls}">
-        <span class="board-col-title">${col.label}</span>
-        <span class="board-col-count">${colROs.length}</span>
+        <span class="board-col-title">${col.label} <span class="board-col-count">(${colROs.length})</span></span>
+        <div class="board-col-sort">
+          Sort by:
+          <select class="sort-select">
+            <option>Custom</option>
+            <option>Date</option>
+            <option>Total</option>
+          </select>
+        </div>
       </div>
       <div class="board-col-body" id="col-${col.cls}"></div>
     `;
@@ -355,11 +426,13 @@ function renderBoard() {
     }
 
     colROs.forEach(ro => {
-      const customer = customers.find(c => c.id === ro.customerId) || {};
-      const vehicle  = vehicles.find(v => v.id === ro.vehicleId)   || {};
-      const total    = roTotal(ro);
-      const serviceNames = ro.services.map(s => s.name).join(', ');
+      const customer  = customers.find(c => c.id === ro.customerId) || {};
+      const vehicle   = vehicles.find(v => v.id === ro.vehicleId)   || {};
+      const total     = roTotal(ro);
       const needsAuth = ro.status === 'Estimate';
+      const techColor = TECH_COLORS[ro.tech] || '#64748b';
+      const techInit  = ro.tech ? ro.tech.slice(0, 2).toUpperCase() : '??';
+      const vehicleLabel = [vehicle.year, vehicle.make, vehicle.model].filter(Boolean).join(' ');
 
       const card = document.createElement('div');
       card.className = 'ro-card';
@@ -368,16 +441,12 @@ function renderBoard() {
           <span class="ro-card-num">#${ro.id}</span>
           <span class="ro-card-date">${formatDate(ro.created)}</span>
         </div>
-        ${needsAuth ? `<div class="ro-card-auth-tag">⚠ Requires Authorization</div>` : ''}
         <div class="ro-card-customer">${customer.firstName || ''} ${customer.lastName || ''}</div>
         <div class="ro-card-phone">${customer.phone || '—'}</div>
-        <div class="ro-card-vehicle">${vehicle.year || ''} ${vehicle.make || ''} ${vehicle.model || ''} · ${vehicle.color || ''}</div>
-        <div class="ro-card-services">${serviceNames || 'No services added'}</div>
+        <div class="ro-card-vehicle">${vehicleLabel}${vehicle.color ? ' · ' + vehicle.color : ''}</div>
+        ${needsAuth ? `<div class="ro-card-auth-tag"><span>⚠</span> Requires Authorization</div>` : ''}
         <div class="ro-card-footer">
-          <div class="ro-card-staff">
-            <span class="staff-chip">${ro.advisor}</span>
-            <span class="staff-chip">${ro.tech}</span>
-          </div>
+          <div class="tech-avatar" style="background:${techColor};" title="${ro.tech}">${techInit}</div>
           <span class="ro-card-total">${fmt$(total)}</span>
         </div>
       `;
