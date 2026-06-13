@@ -196,7 +196,53 @@ Just open `index.html` in a browser. No server needed for the current UI-only ve
 
 ## Session Log
 
-### 2026-06-12 — Claude (claude-sonnet-4-6)
+### 2026-06-12 — Session 2 — Claude (claude-sonnet-4-6)
+
+**Sidebar updates:**
+- Added Inventory (with dropdown chevron) under MAIN section
+- Added ADMIN section with: Employees, Shop Settings, Payments (orange "New" badge), Billing
+- Fixed active nav item styling — now uses blue left border instead of background fill, matching Tekmetric exactly
+- Added placeholder pages for all new nav items
+
+**Tech Board (page-tech-board):**
+- Built from scratch with 4 columns: Not Assigned, Red Young, Shawn Leonard, Emanuel Salazar
+- Column headers show job count, active count, queued count
+- Cards show vehicle, customer, status badge, RO number, total
+- Clicking a card opens the RO detail page
+- Color-coded top border per column (gray = unassigned, accent = tech)
+- NOTE: Mock data uses first names only — tech matching may not be perfect until names are normalized
+
+**RO Detail Page (replaced old side drawer):**
+- Clicking any RO card now navigates to a full-page RO detail view instead of a side drawer
+- Full dark topbar stays visible; left nav sidebar hides for full-width layout
+- Header: Back button, RO number, customer name, vehicle, status badge, advisor/tech label, status dropdown, Authorize button
+- Tab bar: Summary | Inspections | Estimate (default active) | Work In Progress | Payment
+- Quick-add buttons in tab bar: Job | Fee | Discount | Labor Guide | Parts Hub
+- Smart Jobs section (unified box containing): Vehicle Issues/Declined Jobs/Job History tabs, Customer Concern textarea, Finding field, Add Concern button, Technician Comment
+- Jobs toolbar: Reorder Jobs | Reorder Labor & Parts | Collapse All | + Add Job
+- Job cards: numbered with blue circle, collapse arrow, click header to expand/collapse
+- Right sidebar: RO Info (all fields including Key Tag, Promote Time, Save Parts, Marketing Source, Drop off Sublet), Vehicle section (light blue header), Customer section (light orange header), Notes textarea
+- Bottom bar: Labor | Parts | Fees | Tax | Total (highlighted) | Save Changes button
+- Back button saves status + notes and returns to previous page (job board, dashboard, etc.)
+- Hash routing: `#ro-detail` in URL when viewing an RO
+
+**Other fixes:**
+- Removed old `.gemini/` folder (leftover Gemini CLI artifacts)
+- Fixed GitHub credential manager — removed old numeric account (177375388), only ShawnRLeonard remains, no more account picker on push
+- Disabled PrtScn → Snipping Tool override (then reverted — system needs sign-out to apply)
+- Created AI_LOG.md for cross-AI session continuity
+- Created cartech/AI_LOG.md in the CarTech website repo as well
+
+**Key decisions this session:**
+- RO detail is full-page, not a drawer — matches Tekmetric UX
+- Sidebar hides on RO detail to maximize screen space
+- Tech board uses 3 techs: Red Young, Shawn Leonard, Emanuel Salazar (add/remove via TECHS array in app.js)
+- User roles/permissions deferred — build full admin view first, lock down later
+- Firebase backend deferred — finish UI first
+
+---
+
+### 2026-06-12 — Session 1 — Claude (claude-sonnet-4-6)
 - Cloned repo from github.com/ShawnRLeonard/tekmetric2.0 to C:\Users\wrong\Documents\Code\tekmetric2.0
 - Fixed broken `ro-search` JS reference — search input was wired in app.js but missing from HTML
 - Added search input to board toolbar to match Tekmetric layout
@@ -204,13 +250,16 @@ Just open `index.html` in a browser. No server needed for the current UI-only ve
 - Made board columns full-width (flex: 1) instead of fixed 300px — fills the page
 - Increased font sizes on RO cards and column headers for readability
 - Added hash-based routing so page refresh stays on current tab instead of returning to dashboard
-- Created this AI_LOG.md
+
+---
 
 ### Next session priorities:
-1. Drop screenshots of remaining Tekmetric pages for UI build-out
-2. Tech Board page
-3. Add Service / Add Part functionality in RO drawer
-4. Drag-and-drop between board columns
+1. **Continue RO detail polish** — compare fresh screenshot to Tekmetric, close remaining visual gaps
+2. **Add Service / Add Part** in RO detail — forms that actually save to the RO
+3. **Job Board card labels** — "Requires Authorization", "Work Not Started", "Balance Due" colored badges matching Tekmetric
+4. **Remaining pages** — drop Tekmetric screenshots for: Appointments detail, Customers detail, Reports, Inspections
+5. **Drag-and-drop** between Job Board columns
+6. **Firebase setup** — once UI is in good shape
 
 ---
 
