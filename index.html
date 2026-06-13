@@ -101,6 +101,14 @@
           Appointments
         </a>
 
+        <a href="#" class="nav-item" data-page="inventory">
+          <span class="nav-icon">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+          </span>
+          Inventory
+          <svg style="margin-left:auto;" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </a>
+
         <a href="#" class="nav-item" data-page="orders">
           <span class="nav-icon">
             <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
@@ -145,18 +153,35 @@
           Inspections
         </a>
 
-        <a href="#" class="nav-item" data-page="vehicles">
+        <span class="nav-section">Admin</span>
+
+        <a href="#" class="nav-item" data-page="employees">
           <span class="nav-icon">
-            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v9a2 2 0 01-2 2h-3"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
           </span>
-          Vehicles
+          Employees
         </a>
 
-        <a href="#" class="nav-item" data-page="invoices">
+        <a href="#" class="nav-item" data-page="shop-settings">
+          <span class="nav-icon">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+          </span>
+          Shop Settings
+        </a>
+
+        <a href="#" class="nav-item" data-page="payments">
+          <span class="nav-icon">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          </span>
+          Payments
+          <span class="nav-badge nav-badge-new">New</span>
+        </a>
+
+        <a href="#" class="nav-item" data-page="billing">
           <span class="nav-icon">
             <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
           </span>
-          Invoices
+          Billing
         </a>
 
       </nav>
@@ -557,6 +582,51 @@
             </table>
           </div>
 
+        </section>
+
+        <!-- ===== INVENTORY ===== -->
+        <section id="page-inventory" class="page">
+          <div class="dash-placeholder" style="margin-top:60px;">
+            <div class="dash-placeholder-icon">📦</div>
+            <div class="dash-placeholder-title">Inventory</div>
+            <div class="dash-placeholder-sub">Parts inventory management coming soon.</div>
+          </div>
+        </section>
+
+        <!-- ===== EMPLOYEES ===== -->
+        <section id="page-employees" class="page">
+          <div class="dash-placeholder" style="margin-top:60px;">
+            <div class="dash-placeholder-icon">👥</div>
+            <div class="dash-placeholder-title">Employees</div>
+            <div class="dash-placeholder-sub">Employee management coming soon.</div>
+          </div>
+        </section>
+
+        <!-- ===== SHOP SETTINGS ===== -->
+        <section id="page-shop-settings" class="page">
+          <div class="dash-placeholder" style="margin-top:60px;">
+            <div class="dash-placeholder-icon">⚙️</div>
+            <div class="dash-placeholder-title">Shop Settings</div>
+            <div class="dash-placeholder-sub">Shop configuration coming soon.</div>
+          </div>
+        </section>
+
+        <!-- ===== PAYMENTS ===== -->
+        <section id="page-payments" class="page">
+          <div class="dash-placeholder" style="margin-top:60px;">
+            <div class="dash-placeholder-icon">💳</div>
+            <div class="dash-placeholder-title">Payments</div>
+            <div class="dash-placeholder-sub">Payment processing coming soon.</div>
+          </div>
+        </section>
+
+        <!-- ===== BILLING ===== -->
+        <section id="page-billing" class="page">
+          <div class="dash-placeholder" style="margin-top:60px;">
+            <div class="dash-placeholder-icon">💵</div>
+            <div class="dash-placeholder-title">Billing</div>
+            <div class="dash-placeholder-sub">Billing management coming soon.</div>
+          </div>
         </section>
 
       </div><!-- /page-content -->

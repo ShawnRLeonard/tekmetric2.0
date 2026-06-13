@@ -105,7 +105,12 @@ input, select, textarea { font-family: inherit; }
 .nav-item.active {
   background: var(--accent-dim);
   color: var(--accent);
-  border-right: 3px solid var(--accent);
+  border-left: 3px solid var(--accent);
+  padding-left: 13px;
+}
+
+.nav-item.active .nav-icon {
+  opacity: 1;
 }
 
 .nav-item .nav-icon {
@@ -128,6 +133,11 @@ input, select, textarea { font-family: inherit; }
   border-radius: 10px;
   min-width: 18px;
   text-align: center;
+}
+
+.nav-badge-new {
+  background: #f97316 !important;
+  border-radius: 4px !important;
 }
 
 /* Sidebar footer */
