@@ -633,11 +633,32 @@
 
           <!-- Tab Bar -->
           <div class="ro-detail-tabs">
-            <button class="ro-tab active" data-rotab="estimate">Estimate</button>
             <button class="ro-tab" data-rotab="summary">Summary</button>
             <button class="ro-tab" data-rotab="inspections">Inspections</button>
+            <button class="ro-tab active" data-rotab="estimate">Estimate</button>
             <button class="ro-tab" data-rotab="wip">Work In Progress</button>
             <button class="ro-tab" data-rotab="payment">Payment</button>
+            <div class="ro-tab-divider"></div>
+            <button class="ro-quick-btn" title="Add Job">
+              <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+              Job
+            </button>
+            <button class="ro-quick-btn" title="Add Fee">
+              <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+              Fee
+            </button>
+            <button class="ro-quick-btn" title="Add Discount">
+              <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="9" cy="9" r="2"/><circle cx="15" cy="15" r="2"/><line x1="5" y1="19" x2="19" y2="5"/></svg>
+              Discount
+            </button>
+            <button class="ro-quick-btn" title="Labor Guide">
+              <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              Labor Guide
+            </button>
+            <button class="ro-quick-btn" title="Parts Hub">
+              <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+              Parts Hub
+            </button>
           </div>
 
           <!-- Body: main content + right sidebar -->
@@ -649,13 +670,35 @@
               <!-- Estimate Tab -->
               <div class="ro-tab-pane active" id="rotab-estimate">
 
+                <!-- Smart Jobs -->
+                <div class="ro-smart-jobs">
+                  <div class="ro-smart-jobs-header">
+                    <span class="ro-section-label" style="margin:0;">Smart Jobs</span>
+                    <div style="display:flex;gap:8px;align-items:center;">
+                      <button class="btn btn-ghost btn-sm">
+                        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        Add Favorite
+                      </button>
+                      <button class="btn btn-ghost btn-sm">View All</button>
+                    </div>
+                  </div>
+                  <div class="ro-smart-tabs">
+                    <button class="ro-smart-tab active">Vehicle Issues</button>
+                    <button class="ro-smart-tab">Declined Jobs</button>
+                    <button class="ro-smart-tab">Job History</button>
+                  </div>
+                </div>
+
+                <!-- Customer Concern -->
                 <div class="ro-concern-section">
                   <div class="ro-section-label">Customer Concern</div>
                   <textarea class="ro-concern-input" id="detailConcern" placeholder="Describe the customer's concern or requested service..."></textarea>
                 </div>
 
+                <!-- Jobs toolbar -->
                 <div class="ro-jobs-toolbar">
                   <button class="btn btn-ghost btn-sm">Reorder Jobs</button>
+                  <button class="btn btn-ghost btn-sm">Reorder Labor & Parts</button>
                   <button class="btn btn-ghost btn-sm">Collapse All</button>
                   <div style="flex:1;"></div>
                   <button class="btn btn-primary btn-sm" id="detailAddJobBtn">+ Add Job</button>
@@ -714,6 +757,11 @@
                 <div class="ro-sidebar-field"><span class="ro-sf-label">Technician</span><span class="ro-sf-value" id="sdTech">—</span></div>
                 <div class="ro-sidebar-field"><span class="ro-sf-label">Created</span><span class="ro-sf-value" id="sdCreated">—</span></div>
                 <div class="ro-sidebar-field"><span class="ro-sf-label">Mileage In</span><span class="ro-sf-value" id="sdMileage">—</span></div>
+                <div class="ro-sidebar-field"><span class="ro-sf-label">Key Tag #</span><span class="ro-sf-value">—</span></div>
+                <div class="ro-sidebar-field"><span class="ro-sf-label">Promote Time</span><span class="ro-sf-value">—</span></div>
+                <div class="ro-sidebar-field"><span class="ro-sf-label">Save Parts</span><span class="ro-sf-value">No</span></div>
+                <div class="ro-sidebar-field"><span class="ro-sf-label">Marketing Source</span><span class="ro-sf-value">—</span></div>
+                <div class="ro-sidebar-field"><span class="ro-sf-label">Drop off Sublet</span><span class="ro-sf-value">No</span></div>
               </div>
 
               <div class="ro-sidebar-section">

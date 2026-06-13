@@ -199,6 +199,7 @@ function navigate(page) {
 
   currentPage = page;
   location.hash = page;
+  document.body.classList.toggle('ro-detail-open', page === 'ro-detail');
 
   if (page === 'dashboard')     renderDashboard();
   if (page === 'repair-orders') renderRepairOrders();
@@ -717,6 +718,14 @@ function openRoDrawer(roId) {
   document.querySelectorAll('.ro-tab-pane').forEach(p => p.classList.remove('active'));
   document.querySelector('.ro-tab[data-rotab="estimate"]').classList.add('active');
   $('rotab-estimate').classList.add('active');
+
+  // Smart jobs tabs
+  document.querySelectorAll('.ro-smart-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.ro-smart-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+    });
+  });
 
   navigate('ro-detail');
 }

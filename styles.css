@@ -1522,6 +1522,11 @@ select.form-input {
   display: flex;
 }
 
+/* Hide sidebar when RO detail is open */
+.ro-detail-open .sidebar {
+  display: none;
+}
+
 .ro-detail-header {
   display: flex;
   align-items: center;
@@ -1607,11 +1612,13 @@ select.form-input {
 /* Tab bar */
 .ro-detail-tabs {
   display: flex;
+  align-items: center;
   gap: 0;
   border-bottom: 2px solid var(--border);
   background: var(--surface);
   padding: 0 20px;
   flex-shrink: 0;
+  overflow-x: auto;
 }
 
 .ro-tab {
@@ -1632,6 +1639,72 @@ select.form-input {
 
 .ro-tab-pane { display: none; }
 .ro-tab-pane.active { display: block; }
+
+/* Quick-add buttons in tab bar */
+.ro-tab-divider {
+  width: 1px;
+  height: 20px;
+  background: var(--border);
+  margin: 0 6px;
+  align-self: center;
+}
+
+.ro-quick-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text2);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+  font-family: inherit;
+}
+.ro-quick-btn:hover { background: var(--surface3); color: var(--text); }
+
+/* Smart Jobs */
+.ro-smart-jobs {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.ro-smart-jobs-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface2);
+}
+
+.ro-smart-tabs {
+  display: flex;
+  gap: 0;
+  padding: 0 14px;
+}
+
+.ro-smart-tab {
+  padding: 8px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text2);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+  font-family: inherit;
+}
+.ro-smart-tab:hover { color: var(--text); }
+.ro-smart-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
 
 /* Body layout */
 .ro-detail-body {
