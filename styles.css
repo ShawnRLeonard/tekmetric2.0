@@ -1315,7 +1315,7 @@ select.form-input {
 .board-col-header.completed  { border-top-color: var(--green); }
 
 .board-col-title {
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 700;
   color: var(--text);
   white-space: nowrap;
@@ -1323,7 +1323,7 @@ select.form-input {
 
 .board-col-count {
   color: var(--text3);
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 400;
   margin-left: 3px;
 }
@@ -1385,34 +1385,34 @@ select.form-input {
 }
 
 .ro-card-num {
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 600;
   color: var(--text3);
 }
 
 .ro-card-date {
-  font-size: 10px;
+  font-size: 12px;
   color: var(--text3);
 }
 
 .ro-card-customer {
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 700;
   color: var(--text);
-  margin-bottom: 3px;
+  margin-bottom: 4px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .ro-card-phone {
-  font-size: 11px;
+  font-size: 13px;
   color: var(--accent);
-  margin-bottom: 5px;
+  margin-bottom: 6px;
 }
 
 .ro-card-vehicle {
-  font-size: 11px;
+  font-size: 13px;
   color: var(--text2);
   margin-bottom: 10px;
   white-space: nowrap;
@@ -1444,7 +1444,7 @@ select.form-input {
 }
 
 .ro-card-total {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
   color: var(--text);
 }

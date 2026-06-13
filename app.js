@@ -198,6 +198,7 @@ function navigate(page) {
   if (navEl) navEl.classList.add('active');
 
   currentPage = page;
+  location.hash = page;
 
   if (page === 'dashboard')     renderDashboard();
   if (page === 'repair-orders') renderRepairOrders();
@@ -1086,4 +1087,5 @@ $('globalSearch').addEventListener('keydown', function(e) {
 
 // ===== Init =====
 
-renderDashboard();
+const startPage = location.hash.replace('#', '') || 'dashboard';
+navigate(startPage);
