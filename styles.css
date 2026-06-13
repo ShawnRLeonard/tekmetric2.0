@@ -1305,11 +1305,16 @@ select.form-input {
   justify-content: space-between;
   padding: 10px 14px;
   border-bottom: 1px solid var(--border);
+  border-top: 3px solid transparent;
   flex-shrink: 0;
   border-radius: var(--radius) var(--radius) 0 0;
   background: var(--surface);
   gap: 8px;
 }
+
+.board-col-header.estimate   { border-top-color: var(--text3); }
+.board-col-header.inprogress { border-top-color: var(--yellow); }
+.board-col-header.completed  { border-top-color: var(--green); }
 
 .board-col-title {
   font-size: 13px;
