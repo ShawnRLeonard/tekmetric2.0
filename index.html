@@ -598,6 +598,164 @@
 
         </section>
 
+        <!-- ===== RO DETAIL PAGE ===== -->
+        <section id="page-ro-detail" class="page ro-detail-page">
+
+          <!-- Header -->
+          <div class="ro-detail-header">
+            <div class="ro-detail-header-left">
+              <button class="ro-back-btn" id="roBackBtn">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+                Back
+              </button>
+              <div class="ro-detail-title-wrap">
+                <span class="ro-detail-ro-num" id="detailRoNum">RO #1001</span>
+                <span class="ro-detail-colon">:</span>
+                <span class="ro-detail-customer-name" id="detailCustomerName">Customer</span>
+                <span class="ro-detail-vehicle-name" id="detailVehicleName">Vehicle</span>
+                <span class="ro-detail-status-badge" id="detailStatusBadge"></span>
+              </div>
+            </div>
+            <div class="ro-detail-header-right">
+              <div class="ro-detail-header-meta">
+                <span id="detailAdvisorLabel" style="font-size:12px;color:var(--text2);"></span>
+              </div>
+              <select class="status-select" id="detailStatusSelect">
+                <option>Estimate</option>
+                <option>Approved</option>
+                <option>In Progress</option>
+                <option>Completed</option>
+                <option>Invoiced</option>
+              </select>
+              <button class="btn btn-primary btn-sm" id="detailAuthorizeBtn">Authorize</button>
+            </div>
+          </div>
+
+          <!-- Tab Bar -->
+          <div class="ro-detail-tabs">
+            <button class="ro-tab active" data-rotab="estimate">Estimate</button>
+            <button class="ro-tab" data-rotab="summary">Summary</button>
+            <button class="ro-tab" data-rotab="inspections">Inspections</button>
+            <button class="ro-tab" data-rotab="wip">Work In Progress</button>
+            <button class="ro-tab" data-rotab="payment">Payment</button>
+          </div>
+
+          <!-- Body: main content + right sidebar -->
+          <div class="ro-detail-body">
+
+            <!-- LEFT: Tab content -->
+            <div class="ro-detail-main">
+
+              <!-- Estimate Tab -->
+              <div class="ro-tab-pane active" id="rotab-estimate">
+
+                <div class="ro-concern-section">
+                  <div class="ro-section-label">Customer Concern</div>
+                  <textarea class="ro-concern-input" id="detailConcern" placeholder="Describe the customer's concern or requested service..."></textarea>
+                </div>
+
+                <div class="ro-jobs-toolbar">
+                  <button class="btn btn-ghost btn-sm">Reorder Jobs</button>
+                  <button class="btn btn-ghost btn-sm">Collapse All</button>
+                  <div style="flex:1;"></div>
+                  <button class="btn btn-primary btn-sm" id="detailAddJobBtn">+ Add Job</button>
+                </div>
+
+                <div id="detailJobsList"></div>
+
+                <button class="ro-add-concern-btn" id="detailAddConcernBtn">
+                  <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+                  Add Concern
+                </button>
+
+              </div>
+
+              <!-- Summary Tab -->
+              <div class="ro-tab-pane" id="rotab-summary">
+                <div class="dash-placeholder" style="padding:60px 20px;">
+                  <div class="dash-placeholder-title">Summary</div>
+                  <div class="dash-placeholder-sub">Full RO summary coming soon.</div>
+                </div>
+              </div>
+
+              <!-- Inspections Tab -->
+              <div class="ro-tab-pane" id="rotab-inspections">
+                <div class="dash-placeholder" style="padding:60px 20px;">
+                  <div class="dash-placeholder-title">Inspections</div>
+                  <div class="dash-placeholder-sub">Digital inspections coming soon.</div>
+                </div>
+              </div>
+
+              <!-- WIP Tab -->
+              <div class="ro-tab-pane" id="rotab-wip">
+                <div class="dash-placeholder" style="padding:60px 20px;">
+                  <div class="dash-placeholder-title">Work In Progress</div>
+                  <div class="dash-placeholder-sub">WIP tracking coming soon.</div>
+                </div>
+              </div>
+
+              <!-- Payment Tab -->
+              <div class="ro-tab-pane" id="rotab-payment">
+                <div class="dash-placeholder" style="padding:60px 20px;">
+                  <div class="dash-placeholder-title">Payment</div>
+                  <div class="dash-placeholder-sub">Payment processing coming soon.</div>
+                </div>
+              </div>
+
+            </div><!-- /ro-detail-main -->
+
+            <!-- RIGHT: Sidebar -->
+            <div class="ro-detail-sidebar">
+
+              <div class="ro-sidebar-section">
+                <div class="ro-sidebar-section-title">RO Info</div>
+                <div class="ro-sidebar-field"><span class="ro-sf-label">Labor Rate</span><span class="ro-sf-value" id="sdLaborRate">$125.00/hr</span></div>
+                <div class="ro-sidebar-field"><span class="ro-sf-label">Advisor</span><span class="ro-sf-value" id="sdAdvisor">—</span></div>
+                <div class="ro-sidebar-field"><span class="ro-sf-label">Technician</span><span class="ro-sf-value" id="sdTech">—</span></div>
+                <div class="ro-sidebar-field"><span class="ro-sf-label">Created</span><span class="ro-sf-value" id="sdCreated">—</span></div>
+                <div class="ro-sidebar-field"><span class="ro-sf-label">Mileage In</span><span class="ro-sf-value" id="sdMileage">—</span></div>
+              </div>
+
+              <div class="ro-sidebar-section">
+                <div class="ro-sidebar-section-title">Vehicle</div>
+                <div class="ro-sidebar-field"><span class="ro-sf-label">Year/Make/Model</span><span class="ro-sf-value" id="sdVehicle">—</span></div>
+                <div class="ro-sidebar-field"><span class="ro-sf-label">Color</span><span class="ro-sf-value" id="sdColor">—</span></div>
+                <div class="ro-sidebar-field"><span class="ro-sf-label">VIN</span><span class="ro-sf-value ro-sf-vin" id="sdVin">—</span></div>
+              </div>
+
+              <div class="ro-sidebar-section">
+                <div class="ro-sidebar-section-title">Customer</div>
+                <div class="ro-sidebar-field"><span class="ro-sf-label">Name</span><span class="ro-sf-value" id="sdCustName">—</span></div>
+                <div class="ro-sidebar-field"><span class="ro-sf-label">Phone</span><a class="ro-sf-value ro-sf-phone" id="sdCustPhone" href="#">—</a></div>
+                <div class="ro-sidebar-field"><span class="ro-sf-label">Email</span><span class="ro-sf-value" id="sdCustEmail" style="font-size:11px;">—</span></div>
+              </div>
+
+              <div class="ro-sidebar-section">
+                <div class="ro-sidebar-section-title">Notes</div>
+                <textarea class="ro-notes-input" id="sdNotes" placeholder="Internal notes..."></textarea>
+              </div>
+
+            </div><!-- /ro-detail-sidebar -->
+
+          </div><!-- /ro-detail-body -->
+
+          <!-- Bottom totals bar -->
+          <div class="ro-detail-footer">
+            <div class="ro-footer-stat"><div class="ro-footer-label">Labor</div><div class="ro-footer-val" id="footerLabor">$0.00</div></div>
+            <div class="ro-footer-divider"></div>
+            <div class="ro-footer-stat"><div class="ro-footer-label">Parts</div><div class="ro-footer-val" id="footerParts">$0.00</div></div>
+            <div class="ro-footer-divider"></div>
+            <div class="ro-footer-stat"><div class="ro-footer-label">Fees</div><div class="ro-footer-val" id="footerFees">$0.00</div></div>
+            <div class="ro-footer-divider"></div>
+            <div class="ro-footer-stat"><div class="ro-footer-label">Tax</div><div class="ro-footer-val" id="footerTax">$0.00</div></div>
+            <div class="ro-footer-divider"></div>
+            <div class="ro-footer-stat ro-footer-total"><div class="ro-footer-label">Total</div><div class="ro-footer-val" id="footerTotal">$0.00</div></div>
+            <div style="flex:1;"></div>
+            <button class="btn btn-primary" id="footerSaveBtn">Save Changes</button>
+          </div>
+
+        </section>
+
         <!-- ===== INVENTORY ===== -->
         <section id="page-inventory" class="page">
           <div class="dash-placeholder" style="margin-top:60px;">

@@ -207,6 +207,7 @@ function navigate(page) {
   if (page === 'customers')     renderCustomers();
   if (page === 'vehicles')      renderVehicles();
   if (page === 'invoices')      renderInvoices();
+  // ro-detail is populated by openRoDrawer before navigate() is called
 }
 
 document.querySelectorAll('[data-page]').forEach(el => {
@@ -604,124 +605,149 @@ $('ro-search').addEventListener('input', e => renderRepairOrders(e.target.value)
 
 let currentRoId = null;
 
+let prevPage = 'repair-orders';
+
 function openRoDrawer(roId) {
   const ro = repairOrders.find(r => r.id === roId);
   if (!ro) return;
   currentRoId = roId;
+  prevPage = currentPage;
 
   const customer = customers.find(c => c.id === ro.customerId) || {};
-  const vehicle = vehicles.find(v => v.id === ro.vehicleId) || {};
-
-  $('drawerRoNum').textContent = `Repair Order #${ro.id}`;
-  $('drawerRoDate').textContent = `Created ${formatDate(ro.created)} · ${ro.advisor} (Advisor) · ${ro.tech} (Tech)`;
-  $('drawerStatusSelect').value = ro.status;
+  const vehicle  = vehicles.find(v => v.id === ro.vehicleId)   || {};
 
   const laborTotal = ro.services.reduce((s, x) => s + x.labor, 0);
   const partsTotal = ro.parts.reduce((s, x) => s + x.price * x.qty, 0);
-  const tax = partsTotal * 0.0975;
+  const tax        = partsTotal * 0.0975;
   const grandTotal = laborTotal + partsTotal + tax;
 
-  $('drawerBody').innerHTML = `
-    <div class="detail-grid">
-      <div class="detail-card">
-        <div class="detail-card-title">Customer</div>
-        <div class="detail-field">
-          <div class="detail-field-label">Name</div>
-          <div class="detail-field-value">${customer.firstName || ''} ${customer.lastName || ''}</div>
-        </div>
-        <div class="detail-field">
-          <div class="detail-field-label">Phone</div>
-          <div class="detail-field-value"><a href="tel:${customer.phone}">${customer.phone || '—'}</a></div>
-        </div>
-        <div class="detail-field">
-          <div class="detail-field-label">Email</div>
-          <div class="detail-field-value"><a href="mailto:${customer.email}">${customer.email || '—'}</a></div>
-        </div>
-      </div>
-      <div class="detail-card">
-        <div class="detail-card-title">Vehicle</div>
-        <div class="detail-field">
-          <div class="detail-field-label">Year / Make / Model</div>
-          <div class="detail-field-value">${vehicle.year || ''} ${vehicle.make || ''} ${vehicle.model || ''}</div>
-        </div>
-        <div class="detail-field">
-          <div class="detail-field-label">Color / VIN</div>
-          <div class="detail-field-value">${vehicle.color || '—'} · <span style="font-size:11px;color:var(--text2);">${vehicle.vin || '—'}</span></div>
-        </div>
-        <div class="detail-field">
-          <div class="detail-field-label">Mileage In</div>
-          <div class="detail-field-value">${(ro.mileageIn || vehicle.mileage || 0).toLocaleString()} mi</div>
-        </div>
-      </div>
-    </div>
+  // Header
+  $('detailRoNum').textContent = `RO #${ro.id}`;
+  $('detailCustomerName').textContent = `${customer.firstName || ''} ${customer.lastName || ''}`;
+  $('detailVehicleName').textContent  = `${vehicle.year || ''} ${vehicle.make || ''} ${vehicle.model || ''}`;
+  $('detailAdvisorLabel').textContent = `${ro.advisor} (Advisor) · ${ro.tech} (Tech)`;
+  $('detailStatusSelect').value = ro.status;
 
-    <div class="line-items-section">
-      <div class="line-items-header">
-        <span class="line-items-title">Labor / Services</span>
-        <button class="btn btn-ghost btn-sm">+ Add Service</button>
-      </div>
-      ${ro.services.length === 0 ? '<div class="empty-state"><div class="empty-state-text">No services added</div></div>' : ro.services.map(s => `
-        <div class="line-item">
-          <div class="line-item-name">${s.name}</div>
-          <div class="line-item-qty">1</div>
-          <div class="line-item-price">${fmt$(s.labor)}</div>
-          <div class="line-item-total">${fmt$(s.labor)}</div>
+  const badge = $('detailStatusBadge');
+  badge.textContent = ro.status;
+  badge.className = 'ro-detail-status-badge badge ' + ({ 'Estimate':'badge-estimate','Approved':'badge-approved','In Progress':'badge-inprogress','Completed':'badge-completed','Invoiced':'badge-invoiced' }[ro.status] || 'badge-estimate');
+
+  // Sidebar
+  $('sdAdvisor').textContent  = ro.advisor;
+  $('sdTech').textContent     = ro.tech;
+  $('sdCreated').textContent  = formatDate(ro.created);
+  $('sdMileage').textContent  = `${(ro.mileageIn || vehicle.mileage || 0).toLocaleString()} mi`;
+  $('sdVehicle').textContent  = `${vehicle.year || ''} ${vehicle.make || ''} ${vehicle.model || ''}`;
+  $('sdColor').textContent    = vehicle.color || '—';
+  $('sdVin').textContent      = vehicle.vin   || '—';
+  $('sdCustName').textContent = `${customer.firstName || ''} ${customer.lastName || ''}`;
+  $('sdCustPhone').textContent = customer.phone || '—';
+  $('sdCustPhone').href = `tel:${customer.phone}`;
+  $('sdCustEmail').textContent = customer.email || '—';
+  $('sdNotes').value = ro.notes || '';
+  $('detailConcern').value = ro.notes || '';
+
+  // Footer totals
+  $('footerLabor').textContent = fmt$(laborTotal);
+  $('footerParts').textContent = fmt$(partsTotal);
+  $('footerFees').textContent  = fmt$(0);
+  $('footerTax').textContent   = fmt$(tax);
+  $('footerTotal').textContent = fmt$(grandTotal);
+
+  // Jobs list
+  const jobsList = $('detailJobsList');
+  jobsList.innerHTML = '';
+
+  if (ro.services.length === 0 && ro.parts.length === 0) {
+    jobsList.innerHTML = `<div class="empty-state" style="padding:30px;"><div class="empty-state-text">No jobs added yet. Click + Add Job to get started.</div></div>`;
+  } else {
+    ro.services.forEach(svc => {
+      const relatedParts = ro.parts;
+      const svcTotal = svc.labor + (ro.services.length === 1 ? relatedParts.reduce((s,p) => s + p.price*p.qty, 0) : 0);
+      const card = document.createElement('div');
+      card.className = 'ro-job-card';
+      card.innerHTML = `
+        <div class="ro-job-header">
+          <div class="ro-job-name">${svc.name}</div>
+          <div class="ro-job-total">${fmt$(svc.labor)}</div>
         </div>
-      `).join('')}
-    </div>
-
-    <div class="line-items-section">
-      <div class="line-items-header">
-        <span class="line-items-title">Parts</span>
-        <button class="btn btn-ghost btn-sm">+ Add Part</button>
-      </div>
-      ${ro.parts.length === 0 ? '<div style="padding:12px 14px;font-size:12px;color:var(--text3);">No parts added</div>' : ro.parts.map(p => `
-        <div class="line-item">
-          <div class="line-item-name">${p.name}</div>
-          <div class="line-item-qty">×${p.qty}</div>
-          <div class="line-item-price">${fmt$(p.price)}</div>
-          <div class="line-item-total">${fmt$(p.price * p.qty)}</div>
+        <div class="ro-job-body">
+          <div class="ro-line-row ro-line-row-head">
+            <span>Description</span><span style="text-align:center;">Qty</span><span style="text-align:right;">Price</span><span style="text-align:right;">Total</span>
+          </div>
+          <div class="ro-line-row">
+            <span class="ro-line-name">Labor</span>
+            <span class="ro-line-qty">1</span>
+            <span class="ro-line-price">${fmt$(svc.labor)}</span>
+            <span class="ro-line-total">${fmt$(svc.labor)}</span>
+          </div>
         </div>
-      `).join('')}
-    </div>
+      `;
+      jobsList.appendChild(card);
+    });
 
-    <div class="totals-section">
-      <div class="total-row"><span>Labor</span><span>${fmt$(laborTotal)}</span></div>
-      <div class="total-row"><span>Parts</span><span>${fmt$(partsTotal)}</span></div>
-      <div class="total-row"><span>Tax (9.75% on parts)</span><span>${fmt$(tax)}</span></div>
-      <div class="total-row grand"><span>Total</span><span>${fmt$(grandTotal)}</span></div>
-    </div>
+    if (ro.parts.length > 0) {
+      const partsCard = document.createElement('div');
+      partsCard.className = 'ro-job-card';
+      partsCard.innerHTML = `
+        <div class="ro-job-header">
+          <div class="ro-job-name">Parts</div>
+          <div class="ro-job-total">${fmt$(partsTotal)}</div>
+        </div>
+        <div class="ro-job-body">
+          <div class="ro-line-row ro-line-row-head">
+            <span>Part</span><span style="text-align:center;">Qty</span><span style="text-align:right;">Each</span><span style="text-align:right;">Total</span>
+          </div>
+          ${ro.parts.map(p => `
+            <div class="ro-line-row">
+              <span class="ro-line-name">${p.name}</span>
+              <span class="ro-line-qty">${p.qty}</span>
+              <span class="ro-line-price">${fmt$(p.price)}</span>
+              <span class="ro-line-total">${fmt$(p.price * p.qty)}</span>
+            </div>
+          `).join('')}
+        </div>
+      `;
+      jobsList.appendChild(partsCard);
+    }
+  }
 
-    <div class="notes-section">
-      <div class="detail-card-title">Notes / Customer Complaint</div>
-      <textarea id="drawerNotes">${ro.notes}</textarea>
-    </div>
-  `;
+  // Reset tabs to Estimate
+  document.querySelectorAll('.ro-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.ro-tab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelector('.ro-tab[data-rotab="estimate"]').classList.add('active');
+  $('rotab-estimate').classList.add('active');
 
-  $('drawerOverlay').classList.add('open');
-  $('roDrawer').classList.add('open');
+  navigate('ro-detail');
 }
 
-function closeRoDrawer() {
-  $('drawerOverlay').classList.remove('open');
-  $('roDrawer').classList.remove('open');
-  currentRoId = null;
-}
+// RO detail tab switching
+document.querySelectorAll('.ro-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.ro-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.ro-tab-pane').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    $(`rotab-${tab.dataset.rotab}`).classList.add('active');
+  });
+});
 
-$('drawerClose').addEventListener('click', closeRoDrawer);
-$('drawerOverlay').addEventListener('click', closeRoDrawer);
-
-$('saveRoBtn').addEventListener('click', () => {
-  if (!currentRoId) return;
+// Back button
+$('roBackBtn').addEventListener('click', () => {
   const ro = repairOrders.find(r => r.id === currentRoId);
   if (ro) {
-    ro.status = $('drawerStatusSelect').value;
-    const notes = $('drawerNotes');
-    if (notes) ro.notes = notes.value;
+    ro.status = $('detailStatusSelect').value;
+    ro.notes  = $('sdNotes').value;
   }
-  closeRoDrawer();
-  if (currentPage === 'repair-orders') renderRepairOrders();
-  if (currentPage === 'dashboard') renderDashboard();
+  navigate(prevPage);
+});
+
+// Footer save
+$('footerSaveBtn').addEventListener('click', () => {
+  const ro = repairOrders.find(r => r.id === currentRoId);
+  if (ro) {
+    ro.status = $('detailStatusSelect').value;
+    ro.notes  = $('sdNotes').value;
+  }
   showToast(`RO #${currentRoId} saved.`);
 });
 
