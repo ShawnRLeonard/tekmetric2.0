@@ -662,17 +662,22 @@ function openRoDrawer(roId) {
   if (ro.services.length === 0 && ro.parts.length === 0) {
     jobsList.innerHTML = `<div class="empty-state" style="padding:30px;"><div class="empty-state-text">No jobs added yet. Click + Add Job to get started.</div></div>`;
   } else {
+    let jobNum = 1;
+
     ro.services.forEach(svc => {
-      const relatedParts = ro.parts;
-      const svcTotal = svc.labor + (ro.services.length === 1 ? relatedParts.reduce((s,p) => s + p.price*p.qty, 0) : 0);
+      const num = jobNum++;
+      const cardId = `job-body-${num}`;
       const card = document.createElement('div');
       card.className = 'ro-job-card';
       card.innerHTML = `
-        <div class="ro-job-header">
+        <div class="ro-job-header" onclick="toggleJobCard('${cardId}', this)">
+          <div class="ro-job-num">${num}</div>
           <div class="ro-job-name">${svc.name}</div>
+          <div style="flex:1;"></div>
           <div class="ro-job-total">${fmt$(svc.labor)}</div>
+          <svg class="ro-job-chevron" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
-        <div class="ro-job-body">
+        <div class="ro-job-body" id="${cardId}">
           <div class="ro-line-row ro-line-row-head">
             <span>Description</span><span style="text-align:center;">Qty</span><span style="text-align:right;">Price</span><span style="text-align:right;">Total</span>
           </div>
@@ -688,14 +693,19 @@ function openRoDrawer(roId) {
     });
 
     if (ro.parts.length > 0) {
+      const num = jobNum++;
+      const cardId = `job-body-${num}`;
       const partsCard = document.createElement('div');
       partsCard.className = 'ro-job-card';
       partsCard.innerHTML = `
-        <div class="ro-job-header">
+        <div class="ro-job-header" onclick="toggleJobCard('${cardId}', this)">
+          <div class="ro-job-num">${num}</div>
           <div class="ro-job-name">Parts</div>
+          <div style="flex:1;"></div>
           <div class="ro-job-total">${fmt$(partsTotal)}</div>
+          <svg class="ro-job-chevron" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
-        <div class="ro-job-body">
+        <div class="ro-job-body" id="${cardId}">
           <div class="ro-line-row ro-line-row-head">
             <span>Part</span><span style="text-align:center;">Qty</span><span style="text-align:right;">Each</span><span style="text-align:right;">Total</span>
           </div>
@@ -1168,6 +1178,15 @@ function renderInvoices(filter, query) {
     tbody.appendChild(tr);
   });
 }
+
+window.toggleJobCard = function(bodyId, header) {
+  const body = $(bodyId);
+  if (!body) return;
+  const collapsed = body.style.display === 'none';
+  body.style.display = collapsed ? '' : 'none';
+  const chevron = header.querySelector('.ro-job-chevron');
+  if (chevron) chevron.style.transform = collapsed ? '' : 'rotate(-90deg)';
+};
 
 window.markPaid = function(roId) {
   const ro = repairOrders.find(r => r.id === roId);

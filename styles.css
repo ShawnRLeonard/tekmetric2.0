@@ -1522,9 +1522,12 @@ select.form-input {
   display: flex;
 }
 
-/* Hide sidebar when RO detail is open */
+/* Hide sidebar when RO detail is open, keep topbar visible */
 .ro-detail-open .sidebar {
   display: none;
+}
+.ro-detail-open .topbar {
+  display: flex;
 }
 
 .ro-detail-header {
@@ -1805,16 +1808,41 @@ select.form-input {
 }
 
 .ro-sidebar-section {
-  padding: 14px 16px;
   border-bottom: 1px solid var(--border);
 }
 
 .ro-sidebar-section-title {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.8px;
-  color: var(--text3);
+  color: var(--text);
+  padding: 8px 16px;
+  background: var(--surface3);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 0;
+}
+
+.ro-sidebar-section-title.vehicle {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.ro-sidebar-section-title.customer {
+  background: #fff7ed;
+  color: #c2410c;
+}
+
+.ro-sidebar-section .ro-sidebar-field {
+  padding: 0 16px;
+  margin-bottom: 0;
+}
+
+.ro-sidebar-section .ro-sidebar-field:first-of-type {
+  margin-top: 10px;
+}
+
+.ro-sidebar-section .ro-sidebar-field:last-of-type {
   margin-bottom: 10px;
 }
 
@@ -1904,18 +1932,33 @@ select.form-input {
 .ro-job-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 12px 16px;
+  padding: 10px 16px;
   background: var(--surface2);
   border-bottom: 1px solid var(--border);
   gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+.ro-job-header:hover { background: var(--surface3); }
+
+.ro-job-num {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 .ro-job-name {
   font-size: 14px;
   font-weight: 700;
   color: var(--text);
-  flex: 1;
 }
 
 .ro-job-total {
@@ -1923,6 +1966,12 @@ select.form-input {
   font-size: 16px;
   font-weight: 600;
   color: var(--text);
+}
+
+.ro-job-chevron {
+  flex-shrink: 0;
+  color: var(--text3);
+  transition: transform 0.2s;
 }
 
 .ro-job-body { padding: 0; }
