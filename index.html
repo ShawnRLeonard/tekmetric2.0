@@ -409,11 +409,25 @@
 
         <!-- ===== TECH BOARD ===== -->
         <section id="page-tech-board" class="page">
-          <div class="dash-placeholder" style="margin-top:60px;">
-            <div class="dash-placeholder-icon">🔧</div>
-            <div class="dash-placeholder-title">Tech Board</div>
-            <div class="dash-placeholder-sub">Technician job assignment view coming soon.</div>
+
+          <div class="board-toolbar">
+            <div class="board-toolbar-left">
+              <div class="search-wrap">
+                <input type="text" class="inline-search" id="tech-search" placeholder="Search tech board...">
+              </div>
+              <button class="filter-chip">
+                Appt Type
+                <svg width="10" height="6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4"/></svg>
+              </button>
+              <button class="filter-chip">
+                Service Writer
+                <svg width="10" height="6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4"/></svg>
+              </button>
+            </div>
           </div>
+
+          <div class="tech-board" id="tech-board"></div>
+
         </section>
 
         <!-- ===== APPOINTMENTS ===== -->

@@ -202,6 +202,7 @@ function navigate(page) {
 
   if (page === 'dashboard')     renderDashboard();
   if (page === 'repair-orders') renderRepairOrders();
+  if (page === 'tech-board')    renderTechBoard();
   if (page === 'appointments')  renderAppointments();
   if (page === 'customers')     renderCustomers();
   if (page === 'vehicles')      renderVehicles();
@@ -354,6 +355,100 @@ document.addEventListener('DOMContentLoaded', () => {
   const actSearch = $('activitySearch');
   if (actSearch) actSearch.addEventListener('input', e => renderActivityFeed(e.target.value));
 });
+
+// ===== Tech Board =====
+
+const TECHS = [
+  { name: 'Red Young',       initials: 'RY', color: '#8b5cf6' },
+  { name: 'Shawn Leonard',   initials: 'SL', color: '#14b8a6' },
+  { name: 'Emanuel Salazar', initials: 'ES', color: '#3b82f6' },
+];
+
+function renderTechBoard() {
+  const board = $('tech-board');
+  if (!board) return;
+  board.innerHTML = '';
+
+  const activeROs = repairOrders.filter(r => !['Invoiced'].includes(r.status));
+
+  // Not Assigned column
+  const unassignedROs = activeROs.filter(r => !TECHS.find(t => t.name === r.tech));
+  board.appendChild(buildTechCol(null, unassignedROs));
+
+  // One column per tech
+  TECHS.forEach(tech => {
+    const techROs = activeROs.filter(r => r.tech === tech.name);
+    board.appendChild(buildTechCol(tech, techROs));
+  });
+}
+
+function buildTechCol(tech, ros) {
+  const col = document.createElement('div');
+  col.className = 'tech-col';
+
+  const totalJobs = ros.length;
+  const inProgress = ros.filter(r => r.status === 'In Progress').length;
+
+  const headerCls = tech ? '' : 'unassigned';
+  const name = tech ? tech.name : 'Not Assigned';
+
+  col.innerHTML = `
+    <div class="tech-col-header ${headerCls}">
+      <div class="tech-col-name">${name}</div>
+      <div class="tech-col-stats">
+        <div class="tech-stat">
+          <div class="tech-stat-val">${totalJobs}</div>
+          <div class="tech-stat-label">Jobs</div>
+        </div>
+        <div class="tech-stat">
+          <div class="tech-stat-val">${inProgress}</div>
+          <div class="tech-stat-label">Active</div>
+        </div>
+        <div class="tech-stat">
+          <div class="tech-stat-val">${totalJobs - inProgress}</div>
+          <div class="tech-stat-label">Queued</div>
+        </div>
+      </div>
+    </div>
+    <div class="tech-col-body"></div>
+  `;
+
+  const body = col.querySelector('.tech-col-body');
+
+  if (ros.length === 0) {
+    body.innerHTML = `<div class="board-empty">No jobs assigned</div>`;
+  } else {
+    ros.forEach(ro => {
+      const customer = customers.find(c => c.id === ro.customerId) || {};
+      const vehicle  = vehicles.find(v => v.id === ro.vehicleId)   || {};
+      const total    = roTotal(ro);
+
+      let statusCls = 'tech-status-estimate';
+      let statusLabel = ro.status;
+      if (ro.status === 'In Progress') { statusCls = 'tech-status-inprogress'; statusLabel = 'In Progress'; }
+      else if (ro.status === 'Completed') { statusCls = 'tech-status-complete'; statusLabel = 'Complete'; }
+      else if (ro.status === 'Estimate' || ro.status === 'Approved') { statusCls = 'tech-status-notstarted'; statusLabel = 'Not Started'; }
+
+      const card = document.createElement('div');
+      card.className = 'tech-card';
+      card.innerHTML = `
+        <div class="tech-card-status ${statusCls}">${statusLabel}</div>
+        <div class="tech-card-vehicle">${vehicle.year || ''} ${vehicle.make || ''} ${vehicle.model || ''}</div>
+        <div class="tech-card-customer">${customer.firstName || ''} ${customer.lastName || ''}</div>
+        <div class="tech-card-footer">
+          <span class="tech-card-ro">#${ro.id}</span>
+          <span class="tech-card-total">${fmt$(total)}</span>
+        </div>
+      `;
+      card.addEventListener('click', () => openRoDrawer(ro.id));
+      body.appendChild(card);
+    });
+  }
+
+  return col;
+}
+
+$('tech-search') && $('tech-search').addEventListener('input', () => renderTechBoard());
 
 // ===== Repair Orders (Board + List) =====
 
