@@ -670,10 +670,10 @@
               <!-- Estimate Tab -->
               <div class="ro-tab-pane active" id="rotab-estimate">
 
-                <!-- Smart Jobs -->
+                <!-- Smart Jobs — contains concern + finding, all in one box -->
                 <div class="ro-smart-jobs">
                   <div class="ro-smart-jobs-header">
-                    <span class="ro-section-label" style="margin:0;">Smart Jobs</span>
+                    <span class="ro-sj-title">Smart Jobs</span>
                     <div style="display:flex;gap:8px;align-items:center;">
                       <button class="btn btn-ghost btn-sm">
                         <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
@@ -682,17 +682,43 @@
                       <button class="btn btn-ghost btn-sm">View All</button>
                     </div>
                   </div>
-                  <div class="ro-smart-tabs">
-                    <button class="ro-smart-tab active">Vehicle Issues</button>
-                    <button class="ro-smart-tab">Declined Jobs</button>
-                    <button class="ro-smart-tab">Job History</button>
-                  </div>
-                </div>
 
-                <!-- Customer Concern -->
-                <div class="ro-concern-section">
-                  <div class="ro-section-label">Customer Concern</div>
-                  <textarea class="ro-concern-input" id="detailConcern" placeholder="Describe the customer's concern or requested service..."></textarea>
+                  <div class="ro-smart-jobs-body">
+                    <div class="ro-smart-tabs-row">
+                      <div class="ro-smart-tabs">
+                        <button class="ro-smart-tab active">Vehicle Issues</button>
+                        <button class="ro-smart-tab">Declined Jobs</button>
+                        <button class="ro-smart-tab">Job History</button>
+                      </div>
+                      <button class="btn btn-ghost btn-sm">Collapse</button>
+                    </div>
+
+                    <div class="ro-sj-fields">
+                      <div class="ro-sj-field-row">
+                        <label class="ro-sj-label">Customer Concern</label>
+                        <textarea class="ro-concern-input" id="detailConcern" placeholder="Enter customer concern..."></textarea>
+                      </div>
+                      <div class="ro-sj-field-row">
+                        <label class="ro-sj-label">Finding</label>
+                        <div style="display:flex;align-items:flex-start;gap:10px;flex:1;">
+                          <input type="text" class="form-input" style="flex:1;" placeholder="Enter finding...">
+                          <button class="btn btn-ghost btn-sm">+ Add Finding</button>
+                          <button class="btn btn-ghost btn-sm">+ Add Media</button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="ro-sj-footer">
+                      <button class="ro-add-concern-btn" id="detailAddConcernBtn">
+                        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+                        Add Concern
+                      </button>
+                      <div class="ro-sj-technician">
+                        <span class="ro-sj-label">Technician Comment</span>
+                        <button class="btn btn-ghost btn-sm">+ Add Comment</button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 <!-- Jobs toolbar -->
@@ -705,11 +731,6 @@
                 </div>
 
                 <div id="detailJobsList"></div>
-
-                <button class="ro-add-concern-btn" id="detailAddConcernBtn">
-                  <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
-                  Add Concern
-                </button>
 
               </div>
 
